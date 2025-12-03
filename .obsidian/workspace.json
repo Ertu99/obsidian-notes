@@ -39,18 +39,28 @@
             "id": "8d8fa30e7630931d",
             "type": "leaf",
             "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Grafik Görünümü"
+            }
+          },
+          {
+            "id": "cd8c70a9759fdaff",
+            "type": "leaf",
+            "state": {
               "type": "markdown",
               "state": {
-                "file": "RabbitMQ.md",
+                "file": "MICROSERVICE.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "RabbitMQ"
+              "title": "MICROSERVICE"
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -235,9 +245,23 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "8d8fa30e7630931d",
+  "active": "cd8c70a9759fdaff",
   "lastOpenFiles": [
+    "SQL/ORDER BY + OFFSET–FETCH.md",
+    "MICROSERVICE.md",
+    "SQL/GROUP BY ,HAVING.md",
+    "SQL/OUTPUT.md",
+    "SQL/TRY - CATCH.md",
+    "SQL/WITH (NOLOCK).md",
+    "SQL/Database Relationships.md",
+    "SQL/DATABASE NORMALIZATION.md",
+    "SQL/CURSOR.md",
+    "SQL/TRANSACTION.md",
     "SQL/CASE WHEN.md",
+    "SQL/INDEX.md",
+    "SQL/Başlıksız",
+    "SQL/TRIGGER.md",
+    "SQL/VIEW ,FUNCTION, STORED PROCEDURE.md",
     "SQL/SQL.md",
     "RabbitMQ.md",
     "SQL",

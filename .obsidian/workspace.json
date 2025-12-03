@@ -200,8 +200,8 @@
             "state": {
               "type": "git-view",
               "state": {},
-              "icon": "lucide-ghost",
-              "title": "git-view"
+              "icon": "git-pull-request",
+              "title": "Source Control"
             }
           },
           {
@@ -237,12 +237,16 @@
   },
   "active": "8d8fa30e7630931d",
   "lastOpenFiles": [
+    "SQL/CASE WHEN.md",
+    "SQL/SQL.md",
+    "RabbitMQ.md",
+    "SQL",
+    "Başlıksız.canvas",
+    "Başlıksız.base",
     "DAPPER.md",
     "Excalidraw/Drawing 2025-12-03 17.34.45.excalidraw.md",
-    "RabbitMQ.md",
     "Excalidraw/Drawing 2025-12-03 17.28.55.excalidraw.md",
     "Excalidraw",
-    "Başlıksız.canvas",
     "2025-12-03.md",
     "bağlantı oluştur.md",
     "Hoş geldiniz.md"

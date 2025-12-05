@@ -39,10 +39,14 @@
             "id": "8d8fa30e7630931d",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Grafik Görünümü"
+              "type": "markdown",
+              "state": {
+                "file": "1- Basics of C sharp/StyleCop Rules.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "StyleCop Rules"
             }
           },
           {
@@ -51,16 +55,16 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "MICROSERVICE.md",
+                "file": "SQL/CASE WHEN.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "MICROSERVICE"
+              "title": "CASE WHEN"
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -245,28 +249,33 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "cd8c70a9759fdaff",
+  "active": "8d8fa30e7630931d",
   "lastOpenFiles": [
-    "SQL/ORDER BY + OFFSET–FETCH.md",
+    "1- Basics of C sharp/DOTNET CLI.md",
+    "1- Basics of C sharp/StyleCop Rules.md",
+    "1- Basics of C sharp/DOTNET.md",
+    "1- Basics of C sharp/DOTNET CLI",
+    "1- Basics of C sharp",
+    "SQL/CASE WHEN.md",
+    "Başlıksız.canvas",
+    "Başlıksız.base",
+    "SQL/DATABASE NORMALIZATION.md",
+    "RabbitMQ.md",
     "MICROSERVICE.md",
+    "SQL/ORDER BY + OFFSET–FETCH.md",
     "SQL/GROUP BY ,HAVING.md",
     "SQL/OUTPUT.md",
     "SQL/TRY - CATCH.md",
     "SQL/WITH (NOLOCK).md",
     "SQL/Database Relationships.md",
-    "SQL/DATABASE NORMALIZATION.md",
     "SQL/CURSOR.md",
     "SQL/TRANSACTION.md",
-    "SQL/CASE WHEN.md",
     "SQL/INDEX.md",
     "SQL/Başlıksız",
     "SQL/TRIGGER.md",
     "SQL/VIEW ,FUNCTION, STORED PROCEDURE.md",
     "SQL/SQL.md",
-    "RabbitMQ.md",
     "SQL",
-    "Başlıksız.canvas",
-    "Başlıksız.base",
     "DAPPER.md",
     "Excalidraw/Drawing 2025-12-03 17.34.45.excalidraw.md",
     "Excalidraw/Drawing 2025-12-03 17.28.55.excalidraw.md",

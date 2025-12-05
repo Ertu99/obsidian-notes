@@ -84,3 +84,13 @@ Bu kodu çalıştırdığında, hangi işletim sistemindeysen (Windows, Linux, M
 
 ---
 
+`Build` ettiğinde oluşan `.dll` veya `.exe` dosyasının içinde **Makine Kodu (0 ve 1) YOKTUR.** Onun yerine **IL (Intermediate Language - Ara Dil)** dediğimiz, insan diline biraz daha yakın ama bilgisayarın henüz anlamadığı özel bir kod vardır.
+
+Süreç şöyle işler:
+
+1. **Derleme (Build Anı):** Sen kodu yazarsın, derleyiciler (Compiler) bunu **IL**'e çevirip `.dll` dosyasına koyar. (Henüz makine kodu yok!)
+    
+2. **Çalıştırma (Run Anı):** Sen programa çift tıkladığında **CLR** devreye girer. O `.dll` içindeki IL kodunu alır ve **o an (Just-In-Time)** makine koduna (0-1) çevirip işlemciye verir.
+    
+
+**Neden Böyle?** Eğer `.dll` içinde direkt makine kodu olsaydı, Windows'ta derlediğin proje Linux'ta çalışmazdı. İçinde "Ara Dil (IL)" olduğu için, Linux'taki CLR alıp Linux'a göre, Windows'taki CLR alıp Windows'a göre çeviriyor.

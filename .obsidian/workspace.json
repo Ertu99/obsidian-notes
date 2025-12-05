@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1- Basics of C sharp/DOTNET CLI.md",
+                "file": "1- Basics of C sharp/DOTNET.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "DOTNET CLI"
+              "title": "DOTNET"
             }
           },
           {
@@ -251,6 +251,7 @@
   },
   "active": "8d8fa30e7630931d",
   "lastOpenFiles": [
+    "1- Basics of C sharp/DOTNET CLI.md",
     "1- Basics of C sharp/DOTNET.md",
     "1- Basics of C sharp/Basics of C sharp Index.md",
     "SQL/SQL.md",
@@ -260,7 +261,6 @@
     "SQL/ORDER BY + OFFSET–FETCH.md",
     "ORDER BY + OFFSET-FETCH.md",
     "1- Basics of C sharp/StyleCop Rules.md",
-    "1- Basics of C sharp/DOTNET CLI.md",
     "1- Basics of C sharp/DOTNET CLI",
     "1- Basics of C sharp",
     "Başlıksız.canvas",

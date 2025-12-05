@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2-GENERAL DEVELOPMENT SKILLS/Git - Version Control.md",
+                "file": "2-GENERAL DEVELOPMENT SKILLS/2-Repo Hosting Services.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Git - Version Control"
+              "title": "2-Repo Hosting Services"
             }
           },
           {
@@ -156,12 +156,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2-GENERAL DEVELOPMENT SKILLS/Git - Version Control.md",
+                "file": "2-GENERAL DEVELOPMENT SKILLS/2-Repo Hosting Services.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Git - Version Control'dan giden bağlantılar"
+              "title": "2-Repo Hosting Services'dan giden bağlantılar"
             }
           },
           {
@@ -199,13 +199,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2-GENERAL DEVELOPMENT SKILLS/Git - Version Control.md",
+                "file": "2-GENERAL DEVELOPMENT SKILLS/2-Repo Hosting Services.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Git - Version Control ana hatları"
+              "title": "2-Repo Hosting Services ana hatları"
             }
           },
           {
@@ -252,8 +252,9 @@
   },
   "active": "8d8fa30e7630931d",
   "lastOpenFiles": [
+    "2-GENERAL DEVELOPMENT SKILLS/1-Git - Version Control.md",
     "2-GENERAL DEVELOPMENT SKILLS/GENERAL DEVELOPMENT SKILLS Index.md",
-    "2-GENERAL DEVELOPMENT SKILLS/Git - Version Control.md",
+    "2-GENERAL DEVELOPMENT SKILLS/2-Repo Hosting Services.md",
     "1- Basics of C sharp/Basics of C sharp Index.md",
     "SQL/SQL Basics.md",
     "1- Basics of C sharp/StyleCop Rules.md",
@@ -284,7 +285,6 @@
     "SQL/VIEW ,FUNCTION, STORED PROCEDURE.md",
     "SQL",
     "DAPPER.md",
-    "Excalidraw/Drawing 2025-12-03 17.34.45.excalidraw.md",
     "Excalidraw"
   ]
 }

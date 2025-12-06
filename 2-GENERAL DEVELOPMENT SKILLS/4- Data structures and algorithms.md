@@ -14,31 +14,32 @@ Yazılım sistemlerinin performansını değerlendirmek ve karşılaştırmak i�
 
 Geliştiriciler arasında genellikle sadece "Big O" ($O$) konuşulsa da, tam bir analiz için üç temel notasyonun anlaşılması gerekir:
 
-- **Big O ($O$ - Üst Sınır):** Algoritmanın "en kötü durum" (worst-case) senaryosunu temsil eder. Örneğin, $O(n^2)$ olan bir algoritma, girdi boyutu ne olursa olsun karesel büyüme hızını aşmayacaktır. Sistem mühendisliğinde darboğazları belirlemek için en kritik ölçüttür.4
+- **Big O ($O$ - Üst Sınır):** Algoritmanın "en kötü durum" (worst-case) senaryosunu temsil eder. Örneğin, $O(n^2)$ olan bir algoritma, girdi boyutu ne olursa olsun karesel büyüme hızını aşmayacaktır. Sistem mühendisliğinde darboğazları belirlemek için en kritik ölçüttür.
     
 - **Big Omega ($\Omega$ - Alt Sınır):** Algoritmanın "en iyi durum" (best-case) senaryosunu ifade eder. Sıralı bir dizide arama yaparken ilk elemanı bulmak $\Omega(1)$ karmaşıklığındadır. Ancak sistemler en iyi duruma göre tasarlanmaz.
     
-- **Big Theta ($\Theta$ - Kesin Sınır):** Algoritmanın hem alt hem de üst sınırının aynı fonksiyonla ifade edilebildiği durumdur. Bir algoritmanın her durumda (best, average, worst) benzer performans gösterdiğini belirtir.4
+- **Big Theta ($\Theta$ - Kesin Sınır):** Algoritmanın hem alt hem de üst sınırının aynı fonksiyonla ifade edilebildiği durumdur. Bir algoritmanın her durumda (best, average, worst) benzer performans gösterdiğini belirtir.
     
 
 ### 1.2 Zaman Karmaşıklığı Sınıfları ve.NET Örnekleri
 
 Algoritmaların zaman karmaşıklığı, işlemci döngülerinin tüketim hızını belirler..NET Framework içerisindeki veri yapıları üzerinden bu sınıfları örneklendirebiliriz:
 
-- **$O(1)$ - Sabit Zaman (Constant Time):** Girdi boyutundan bağımsızdır. `List<T>` koleksiyonunda indekse dayalı erişim (`list[1]`) veya `Dictionary<TKey, TValue>` yapısında anahtar ile veri çekmek (çarpışmasız durumda) bu kategoriye girer. Bu, performansın "altın standardıdır".5
+- **$O(1)$ - Sabit Zaman (Constant Time):** Girdi boyutundan bağımsızdır. `List<T>` koleksiyonunda indekse dayalı erişim (`list[1]`) veya `Dictionary<TKey, TValue>` yapısında anahtar ile veri çekmek (çarpışmasız durumda) bu kategoriye girer. Bu, performansın "altın standardıdır".
     
-- **$O(\log n)$ - Logaritmik Zaman (Logarithmic Time):** Girdi boyutu her adımda belirli bir oranda (genellikle yarıya) azalır. Sıralı bir dizide İkili Arama (Binary Search) veya `SortedDictionary` gibi dengeli ağaç yapılarında eleman arama işlemleri logaritmik karmaşıklığa sahiptir. 1 milyon elemanlı bir veri setinde arama yapmak sadece yaklaşık 20 adım sürer ($\log_2 10^6 \approx 20$).3
+- **$O(\log n)$ - Logaritmik Zaman (Logarithmic Time):** Girdi boyutu her adımda belirli bir oranda (genellikle yarıya) azalır. Sıralı bir dizide İkili Arama (Binary Search) veya `SortedDictionary` gibi dengeli ağaç yapılarında eleman arama işlemleri logaritmik karmaşıklığa sahiptir. 1 milyon elemanlı bir veri setinde arama yapmak sadece yaklaşık 20 adım sürer ($\log_2 10^6 \approx 20$).
     
-- **$O(n)$ - Doğrusal Zaman (Linear Time):** İşlem süresi girdi boyutuyla birebir artar. `List<T>.Contains()` metodu, aranan elemanı bulmak için tüm listeyi gezmek zorunda kalabilir. Döngüler (`foreach`, `for`) genellikle bu karmaşıklığı üretir.2
+- **$O(n)$ - Doğrusal Zaman (Linear Time):** İşlem süresi girdi boyutuyla birebir artar. `List<T>.Contains()` metodu, aranan elemanı bulmak için tüm listeyi gezmek zorunda kalabilir. Döngüler (`foreach`, `for`) genellikle bu karmaşıklığı üretir.
     
-- **$O(n \log n)$ - Doğrusal-Logaritmik Zaman (Linearithmic Time):** Verimli sıralama algoritmalarının (Merge Sort, Heap Sort, Quick Sort) standart karmaşıklığıdır..NET'in `Array.Sort` veya LINQ'in `OrderBy` metotları bu sınıfta çalışır. Büyük veri setlerini sıralamak için kabul edilebilir üst sınırdır.8
+- **$O(n \log n)$ - Doğrusal-Logaritmik Zaman (Linearithmic Time):** Verimli sıralama algoritmalarının (Merge Sort, Heap Sort, Quick Sort) standart karmaşıklığıdır..NET'in `Array.Sort` veya LINQ'in `OrderBy` metotları bu sınıfta çalışır. Büyük veri setlerini sıralamak için kabul edilebilir üst sınırdır.
     
-- **$O(n^2)$ - Karesel Zaman (Quadratic Time):** İç içe döngüler (nested loops) içeren algoritmalar bu sınıfa girer. Kabarcık Sıralaması (Bubble Sort) gibi verimsiz algoritmalar veya iki listeyi iç içe `for` ile karşılaştırmak karesel karmaşıklık yaratır. Girdi boyutu 10 kat arttığında süre 100 kat artar, bu da ölçeklenebilirlik için büyük bir tehdittir.5
-    
+- **$O(n^2)$ - Karesel Zaman (Quadratic Time):** İç içe döngüler (nested loops) içeren algoritmalar bu sınıfa girer. Kabarcık Sıralaması (Bubble Sort) gibi verimsiz algoritmalar veya iki listeyi iç içe `for` ile karşılaştırmak karesel karmaşıklık yaratır. Girdi boyutu 10 kat arttığında süre 100 kat artar, bu da ölçeklenebilirlik için büyük bir tehdittir.
+- 
+![[Pasted image 20251206185327.png]]
 
 ### 1.3 Alan Karmaşıklığı (Space Complexity)
 
-Alan karmaşıklığı, algoritmanın çalışması sırasında ihtiyaç duyduğu "ekstra" belleği ifade eder. Girdinin kendisi bu hesaba dahil edilmez..NET ortamında alan karmaşıklığı, doğrudan Garbage Collector (GC) performansı ile ilişkilidir. Örneğin, `Quick Sort` yerinde (in-place) sıralama yaptığı için $O(\log n)$ (rekürsif yığın çağrıları için) alan kullanırken, `Merge Sort` dizinin bir kopyasını oluşturduğu için $O(n)$ ek alan gerektirir.2 Yüksek bellek kullanımı, GC'nin daha sık çalışmasına (GC Pressure) ve uygulamanın duraklamasına (Latency) neden olabilir.
+Alan karmaşıklığı, algoritmanın çalışması sırasında ihtiyaç duyduğu "ekstra" belleği ifade eder. Girdinin kendisi bu hesaba dahil edilmez..NET ortamında alan karmaşıklığı, doğrudan Garbage Collector (GC) performansı ile ilişkilidir. Örneğin, `Quick Sort` yerinde (in-place) sıralama yaptığı için $O(\log n)$ (rekürsif yığın çağrıları için) alan kullanırken, `Merge Sort` dizinin bir kopyasını oluşturduğu için $O(n)$ ek alan gerektirir. Yüksek bellek kullanımı, GC'nin daha sık çalışmasına (GC Pressure) ve uygulamanın duraklamasına (Latency) neden olabilir.
 
 ## Bölüm 2:.NET Çalışma Zamanı (Runtime) Bellek Mimarisi
 
@@ -48,11 +49,11 @@ Alan karmaşıklığı, algoritmanın çalışması sırasında ihtiyaç duyduğ
 
 .NET bellek yönetimi iki ana bölgeye ayrılır:
 
-1. **Stack (Yığın):** Çok hızlıdır, LIFO (Last-In, First-Out) mantığıyla çalışır ve işlemci önbelleği (L1/L2 Cache) ile son derece uyumludur. Metot çağrıları, yerel değişkenler ve değer tipleri burada saklanır. Stack üzerindeki bellek yönetimi deterministiktir; bir metot bittiğinde (scope dışına çıkıldığında) bellek anında serbest bırakılır.10
+1. **Stack (Yığın):** Çok hızlıdır, LIFO (Last-In, First-Out) mantığıyla çalışır ve işlemci önbelleği (L1/L2 Cache) ile son derece uyumludur. Metot çağrıları, yerel değişkenler ve değer tipleri burada saklanır. Stack üzerindeki bellek yönetimi deterministiktir; bir metot bittiğinde (scope dışına çıkıldığında) bellek anında serbest bırakılır.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/VZ_1I_UuHdE?si=Q6eLk-m5BoURLmqx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-1. **Heap (Öbek):** Daha büyük ve kaotik bir bellek alanıdır. Referans tipleri (`class`, `interface`, `delegate`, `string`, `array`) burada yaşar. Heap üzerindeki nesnelerin yaşam döngüsü Garbage Collector (GC) tarafından yönetilir. Heap'ten bellek tahsis etmek (allocation), Stack'e göre daha maliyetlidir çünkü GC'nin boş bir blok bulması ve yönetmesi gerekir.10
+1. **Heap (Öbek):** Daha büyük ve kaotik bir bellek alanıdır. Referans tipleri (`class`, `interface`, `delegate`, `string`, `array`) burada yaşar. Heap üzerindeki nesnelerin yaşam döngüsü Garbage Collector (GC) tarafından yönetilir. Heap'ten bellek tahsis etmek (allocation), Stack'e göre daha maliyetlidir çünkü GC'nin boş bir blok bulması ve yönetmesi gerekir.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/OVTXS2YlpnQ?si=jFmI5OYipZj_mfHJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     
@@ -68,7 +69,7 @@ Alan karmaşıklığı, algoritmanın çalışması sırasında ihtiyaç duyduğ
 
 Veri Yapısı Seçiminde Kritik Karar:
 
-Küçük ve değişmez veriler (örneğin Point(x, y), ComplexNumber) için struct kullanmak, Heap tahsisini ve GC yükünü ortadan kaldırır. Ancak büyük struct'ları metotlara parametre olarak geçmek, verinin sürekli kopyalanmasına neden olacağı için performansı düşürebilir. Bu durumda ref anahtar kelimesi ile referans geçişi sağlanmalıdır.10
+Küçük ve değişmez veriler (örneğin Point(x, y), ComplexNumber) için struct kullanmak, Heap tahsisini ve GC yükünü ortadan kaldırır. Ancak büyük struct'ları metotlara parametre olarak geçmek, verinin sürekli kopyalanmasına neden olacağı için performansı düşürebilir. Bu durumda ref anahtar kelimesi ile referans geçişi sağlanmalıdır.
 
 ### 2.3 Boxing ve Unboxing Maliyetleri
 
@@ -81,17 +82,19 @@ Bir değer tipinin (örneğin `int`), bir referans tipine (örneğin `object` ve
 3. Kutunun referansı geri döndürülür.
     
 
-**Unboxing** ise bu işlemin tersidir. Boxing işlemi, hem bellek tahsisi hem de kopyalama gerektirdiği için hesaplama açısından pahalıdır ($O(1)$ olsa da sabit katsayısı yüksektir). `ArrayList` gibi eski, jenerik olmayan (non-generic) koleksiyonlar, her eleman için Boxing uyguladığından modern `List<T>`'ye göre çok daha yavaştır. Jenerik mimari (`List<int>`), değer tiplerini Boxing olmadan doğrudan saklayarak bu maliyeti ortadan kaldırır.11
+**Unboxing** ise bu işlemin tersidir. Boxing işlemi, hem bellek tahsisi hem de kopyalama gerektirdiği için hesaplama açısından pahalıdır ($O(1)$ olsa da sabit katsayısı yüksektir). `ArrayList` gibi eski, jenerik olmayan (non-generic) koleksiyonlar, her eleman için Boxing uyguladığından modern `List<T>`'ye göre çok daha yavaştır. Jenerik mimari (`List<int>`), değer tiplerini Boxing olmadan doğrudan saklayarak bu maliyeti ortadan kaldırır.
 
 ## Bölüm 3: Bitişik Bellek Yapıları: Diziler ve Listeler
 
 ### 3.1 Diziler (Arrays): Sistemin Temel Taşı
 
-Diziler,.NET'teki en temel ve en hızlı veri yapısıdır. Bellekte kesintisiz (contiguous) bir blok olarak tahsis edilirler. Bu yapı, modern işlemcilerin "Spatial Locality" (Uzamsal Yerellik) prensibine mükemmel uyum sağlar. İşlemci, dizinin bir elemanına eriştiğinde, donanım seviyesindeki öngetiriciler (hardware prefetchers) sonraki elemanları da önbelleğe (CPU Cache) yükler. Bu sayede, dizi üzerinde döngü kurmak (`for`, `foreach`), bağlı listelere veya dağınık nesnelere göre katbekat daha hızlıdır.14 Dizilerin boyutu oluşturulduğu anda sabitlenir ve çalışma zamanında değiştirilemez.
+Diziler,.NET'teki en temel ve en hızlı veri yapısıdır. Bellekte kesintisiz (contiguous) bir blok olarak tahsis edilirler. Bu yapı, modern işlemcilerin "Spatial Locality" (Uzamsal Yerellik) prensibine mükemmel uyum sağlar. İşlemci, dizinin bir elemanına eriştiğinde, donanım seviyesindeki öngetiriciler (hardware prefetchers) sonraki elemanları da önbelleğe (CPU Cache) yükler. Bu sayede, dizi üzerinde döngü kurmak (`for`, `foreach`), bağlı listelere veya dağınık nesnelere göre katbekat daha hızlıdır. Dizilerin boyutu oluşturulduğu anda sabitlenir ve çalışma zamanında değiştirilemez.
 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vOsi1Ra2Uyw?si=TtCSZcy_ffkZ8ZXb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 ### 3.2 `List<T>`: Dinamik Dizi Mühendisliği
 
-Geliştiricilerin en sık kullandığı koleksiyon olan `List<T>`, aslında "dinamik boyutlu dizi" deseninin (pattern) bir implementasyonudur. `System.Collections.Generic` altında bulunan bu sınıf, arka planda `T _items` adında bir dizi yönetir.16
+Geliştiricilerin en sık kullandığı koleksiyon olan `List<T>`, aslında "dinamik boyutlu dizi" deseninin (pattern) bir implementasyonudur. `System.Collections.Generic` altında bulunan bu sınıf, arka planda `T _items` adında bir dizi yönetir.
 
 #### İç Çalışma Mekanizması ve Kapasite Yönetimi
 
@@ -109,16 +112,16 @@ Bir `List<T>` oluşturulduğunda, genellikle küçük bir başlangıç kapasites
         
     - Eski dizi serbest bırakılır.
         
-    - Yeni eleman eklenir.17
+    - Yeni eleman eklenir.
         
 
 Bu yeniden boyutlandırma işlemi $O(n)$ maliyetindedir. Ancak bu işlem nadiren gerçekleştiği için (logaritmik sıklıkta), `Add` işleminin "amortize edilmiş" (amortized) karmaşıklığı $O(1)$ olarak kabul edilir. Yine de, milyonlarca eleman eklenecek bir listede, dizinin defalarca yeniden boyutlandırılması ve kopyalanması ciddi performans kaybı ve GC baskısı yaratır.
 
-**Performans İpucu:** Eleman sayısını yaklaşık olarak biliyorsanız, listeyi oluştururken kapasiteyi belirtmek (`new List<int>(10000)`) bu maliyetleri sıfıra indirir.17
+**Performans İpucu:** Eleman sayısını yaklaşık olarak biliyorsanız, listeyi oluştururken kapasiteyi belirtmek (`new List<int>(10000)`) bu maliyetleri sıfıra indirir.
 
 #### `TrimExcess`: Bellek Tasarrufu
 
-Büyük bir liste oluşturup ardından elemanların çoğunu sildiğinizde, listenin `Capacity` değeri (dahili dizinin boyutu) otomatik olarak küçülmez. `List<T>.TrimExcess()` metodu, eğer listenin doluluk oranı %90'ın altındaysa, dahili diziyi mevcut eleman sayısına (`Count`) eşit olacak şekilde yeniden boyutlandırır. Bu işlem de $O(n)$ maliyetindedir (kopyalama gerektirir) ve sadece belleğin kritik olduğu durumlarda kullanılmalıdır.21
+Büyük bir liste oluşturup ardından elemanların çoğunu sildiğinizde, listenin `Capacity` değeri (dahili dizinin boyutu) otomatik olarak küçülmez. `List<T>.TrimExcess()` metodu, eğer listenin doluluk oranı %90'ın altındaysa, dahili diziyi mevcut eleman sayısına (`Count`) eşit olacak şekilde yeniden boyutlandırır. Bu işlem de $O(n)$ maliyetindedir (kopyalama gerektirir) ve sadece belleğin kritik olduğu durumlarda kullanılmalıdır.
 
 ## Bölüm 4: Bağlantılı Veri Yapıları ve Önbellek Sorunsalı
 

@@ -127,7 +127,7 @@ Büyük bir liste oluşturup ardından elemanların çoğunu sildiğinizde, list
 
 ### 4.1 `LinkedList<T>`: Teorik Avantajlar ve Pratik Gerçekler
 
-.NET'teki `LinkedList<T>`, çift yönlü bağlı liste (doubly linked list) implementasyonudur. Her eleman (`LinkedListNode<T>`), verinin kendisini, bir önceki düğüme (`Previous`) ve bir sonraki düğüme (`Next`) olan referansları tutan bir nesnedir.24
+.NET'teki `LinkedList<T>`, çift yönlü bağlı liste (doubly linked list) implementasyonudur. Her eleman (`LinkedListNode<T>`), verinin kendisini, bir önceki düğüme (`Previous`) ve bir sonraki düğüme (`Next`) olan referansları tutan bir nesnedir.
 
 Teorik olarak, bağlı listenin arasına eleman eklemek veya çıkarmak $O(1)$ karmaşıklığındadır (sadece pointer'ları güncellemek yeterlidir). Oysa `List<T>` yapısında araya ekleme yapmak, o noktadan sonraki tüm elemanların kaydırılmasını gerektirdiği için $O(n)$ maliyetindedir.
 <iframe width="560" height="315" src="https://www.youtube.com/embed/QAC4JDcwZo4?si=hYEImWom_DaXDNIa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -137,16 +137,16 @@ Kağıt üzerindeki bu $O(1)$ avantajı, modern donanımlarda çoğu zaman yanı
 
 - **List (Dizi):** Veriler bitişiktir. İşlemci bir veri bloğunu önbelleğe çektiğinde, sonraki veriler de gelmiş olur. Önbellek ıska oranı (Cache Miss Rate) çok düşüktür.
     
-- **LinkedList:** Veriler dağınıktır. Her düğüm erişimi, potansiyel bir önbellek ıskalaması ve ana belleğe (RAM) maliyetli bir yolculuk demektir. RAM erişimi, önbellek erişiminden yüzlerce kat daha yavaştır.14
+- **LinkedList:** Veriler dağınıktır. Her düğüm erişimi, potansiyel bir önbellek ıskalaması ve ana belleğe (RAM) maliyetli bir yolculuk demektir. RAM erişimi, önbellek erişiminden yüzlerce kat daha yavaştır.
     
 
-Yapılan benchmark testlerinde, milyonlarca elemanlı bir `List<T>` üzerinde araya ekleme yapmak (veri kaydırma maliyetine rağmen), genellikle `LinkedList<T>` üzerinde gezerek (traverse) ekleme yapmaktan daha hızlı sonuçlanmaktadır. `LinkedList<T>` kullanımı,.NET dünyasında sadece çok spesifik senaryolarla (örneğin, eleman referansının elde tutulduğu ve sürekli $O(1)$ silme/ekleme yapılan LRU Cache implementasyonları gibi) sınırlı kalmalıdır.24
+Yapılan benchmark testlerinde, milyonlarca elemanlı bir `List<T>` üzerinde araya ekleme yapmak (veri kaydırma maliyetine rağmen), genellikle `LinkedList<T>` üzerinde gezerek (traverse) ekleme yapmaktan daha hızlı sonuçlanmaktadır. `LinkedList<T>` kullanımı,.NET dünyasında sadece çok spesifik senaryolarla (örneğin, eleman referansının elde tutulduğu ve sürekli $O(1)$ silme/ekleme yapılan LRU Cache implementasyonları gibi) sınırlı kalmalıdır.
 
 ## Bölüm 5: Hash Tabanlı Veri Yapıları ve `Dictionary` Mimarisi
 
 ### 5.1 Hash Tablosu Teorisi ve `Dictionary<TKey, TValue>`
 
-`Dictionary<TKey, TValue>`, anahtar-değer çiftlerini saklayan ve anahtara göre ortalama $O(1)$ erişim hızı sunan bir veri yapısıdır..NET implementasyonu, "Separate Chaining" (Ayrık Zincirleme) yönteminin optimize edilmiş bir varyasyonunu kullanır.26
+`Dictionary<TKey, TValue>`, anahtar-değer çiftlerini saklayan ve anahtara göre ortalama $O(1)$ erişim hızı sunan bir veri yapısıdır..NET implementasyonu, "Separate Chaining" (Ayrık Zincirleme) yönteminin optimize edilmiş bir varyasyonunu kullanır.
 
 #### İç Veri Yapıları
 
@@ -203,7 +203,7 @@ Bu iki veri yapısı da arka planda dizi (`T`) kullanır ve `List<T>` gibi dinam
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/VZ_1I_UuHdE?si=Q6eLk-m5BoURLmqx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-- **Queue (FIFO):** İlk giren ilk çıkar. BFS algoritmalarında, mesaj kuyruklarında ve işlem sıraya almada kullanılır. `Queue<T>`, performansı artırmak için "Dairesel Tampon" (Circular Buffer) mantığıyla çalışır. Dizinin başından eleman silindiğinde (Dequeue), diğer elemanlar kaydırılmaz; sadece "baş" (head) ve "kuyruk" (tail) indeksleri güncellenir. Bu sayede hem ekleme hem çıkarma $O(1)$ karmaşıklığındadır.35
+- **Queue (FIFO):** İlk giren ilk çıkar. BFS algoritmalarında, mesaj kuyruklarında ve işlem sıraya almada kullanılır. `Queue<T>`, performansı artırmak için "Dairesel Tampon" (Circular Buffer) mantığıyla çalışır. Dizinin başından eleman silindiğinde (Dequeue), diğer elemanlar kaydırılmaz; sadece "baş" (head) ve "kuyruk" (tail) indeksleri güncellenir. Bu sayede hem ekleme hem çıkarma $O(1)$ karmaşıklığındadır.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/6L94crb0PgA?si=AsiESzf1UeqF4HrZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -217,7 +217,7 @@ Standart "Binary Heap" (İkili Yığın) yapısında her düğümün 2 çocuğu 
 
 - **Neden 4 Çocuk?** Ağacın derinliğini azaltmak ve bellek yerelliğini (cache locality) artırmak için. Daha sığ bir ağaç, kökten yaprağa inerken daha az karşılaştırma ve bellek erişimi demektir. Modern CPU önbellek hatları, bitişik duran 4 çocuğu tek seferde yükleyebilir, bu da performansı artırır.
     
-- **Karmaşıklık:** Ekleme (`Enqueue`) ve en yüksek öncelikli elemanı çekme (`Dequeue`) işlemleri $O(\log_4 n)$ karmaşıklığındadır.37
+- **Karmaşıklık:** Ekleme (`Enqueue`) ve en yüksek öncelikli elemanı çekme (`Dequeue`) işlemleri $O(\log_4 n)$ karmaşıklığındadır.
     
 
 ## Bölüm 7: Ağaçlar ve Sıralı Veri Yapıları
@@ -264,7 +264,7 @@ Bu hibrit yapı,.NET sıralama fonksiyonlarının hem çok hızlı hem de "köt�
 
 ### 8.2 İkili Arama (Binary Search)
 
-Sıralı bir `List<T>` veya dizi üzerinde `BinarySearch` metodu kullanıldığında, "Böl ve Yönet" prensibiyle arama yapılır. Ortadaki elemana bakılır, aranan değer büyükse sağ taraf, küçükse sol taraf seçilir ve işlem tekrarlanır. Karmaşıklık $O(\log n)$'dir. 1 milyar elemanlı sıralı bir listede, aranan değeri bulmak en fazla 30 adım sürer. `List<T>.Contains` ($O(n)$) ile kıyaslandığında devasa bir performans farkı yaratır.8
+Sıralı bir `List<T>` veya dizi üzerinde `BinarySearch` metodu kullanıldığında, "Böl ve Yönet" prensibiyle arama yapılır. Ortadaki elemana bakılır, aranan değer büyükse sağ taraf, küçükse sol taraf seçilir ve işlem tekrarlanır. Karmaşıklık $O(\log n)$'dir. 1 milyar elemanlı sıralı bir listede, aranan değeri bulmak en fazla 30 adım sürer. `List<T>.Contains` ($O(n)$) ile kıyaslandığında devasa bir performans farkı yaratır.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/_T_7fqPfrrk?si=8RdyZH1-1I6HgaRR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -293,7 +293,7 @@ Sıralı bir `List<T>` veya dizi üzerinde `BinarySearch` metodu kullanıldığ�
 
 ### 9.2 Gezinme Algoritmaları (BFS ve DFS)
 
-- **BFS (Breadth-First Search - Sığ Öncelikli Arama):** Grafikte katman katman ilerler. Başlangıç düğümüne en yakın düğümleri önce ziyaret eder. **En kısa yol** problemlerinde (ağırlıksız grafiklerde) kullanılır..NET'te `Queue<T>` kullanılarak implemente edilir.35
+- **BFS (Breadth-First Search - Sığ Öncelikli Arama):** Grafikte katman katman ilerler. Başlangıç düğümüne en yakın düğümleri önce ziyaret eder. **En kısa yol** problemlerinde (ağırlıksız grafiklerde) kullanılır..NET'te `Queue<T>` kullanılarak implemente edilir.
     
 - **DFS (Depth-First Search - Derin Öncelikli Arama):** Bir yolu sonuna kadar takip eder, gidecek yer kalmadığında geri döner (backtracking). Labirent çözme, topolojik sıralama ve döngü tespiti problemlerinde kullanılır..NET'te `Stack<T>` veya özyineleme (recursion) ile implemente edilir.
     
@@ -342,19 +342,7 @@ C#
 Span<int> numbers = stackalloc int;
 ```
 
-Bu yöntem, sadece çok küçük ve metodun yaşam süresiyle sınırlı diziler için kullanılmalıdır. Büyük tahsisler `StackOverflowException` riskini doğurur.50
+Bu yöntem, sadece çok küçük ve metodun yaşam süresiyle sınırlı diziler için kullanılmalıdır. Büyük tahsisler `StackOverflowException` riskini doğurur.
 
-## Sonuç
 
-.NET Core ekosisteminde veri yapıları ve algoritmalar, teorik bilgisayar bilimleri ile pratik sistem mühendisliğinin kesişim noktasındadır. Bir algoritmanın Big O karmaşıklığı önemli bir başlangıç noktası olsa da,.NET dünyasında "gerçek" performans; bellek yerelliği, tahsis maliyetleri, GC davranışı ve doğru veri yapısı seçimi (örneğin `struct` vs `class`, `List` vs `LinkedList`) ile belirlenir. Modern.NET araçları (`Span`, `ArrayPool`, `Introsort`, `PriorityQueue`), geliştiricilere hem yüksek seviyeli soyutlamalar hem de düşük seviyeli bellek kontrolü sunarak, optimize edilmiş yazılımlar geliştirme imkanı tanımaktadır. Bu yetkinlikler, sıradan bir kod yazarı ile bir performans mimarı arasındaki farkı belirleyen temel unsurlardır.
 
-### Tablo Listesi
-
-- **Tablo 1:** Zaman Karmaşıklığı Sınıfları ve.NET Örnekleri
-    
-- **Tablo 2:** `SortedDictionary` ve `SortedList` Karşılaştırması
-    
-
----
-
-**Atıflar:** 2

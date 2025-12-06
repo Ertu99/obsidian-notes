@@ -68,9 +68,37 @@
               "icon": "lucide-git-fork",
               "title": "Grafik Görünümü"
             }
+          },
+          {
+            "id": "4f7c02702d772a33",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2-GENERAL DEVELOPMENT SKILLS/3-HTTP - HTTPS PROTOCOL.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "3-HTTP - HTTPS PROTOCOL"
+            }
+          },
+          {
+            "id": "664dea8e545d289a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "conflict-files-obsidian-git.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "conflict-files-obsidian-git"
+            }
           }
         ],
-        "currentTab": 4
+        "currentTab": 6
       }
     ],
     "direction": "vertical"
@@ -255,11 +283,12 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "7c23e2e97b462819",
+  "active": "664dea8e545d289a",
   "lastOpenFiles": [
+    "2-GENERAL DEVELOPMENT SKILLS/3-HTTP - HTTPS PROTOCOL.md",
+    "2-GENERAL DEVELOPMENT SKILLS/GENERAL DEVELOPMENT SKILLS Index.md",
     "conflict-files-obsidian-git.md",
     "SQL/SQL Basics.md",
-    "2-GENERAL DEVELOPMENT SKILLS/GENERAL DEVELOPMENT SKILLS Index.md",
     "2-GENERAL DEVELOPMENT SKILLS/2-Repo Hosting Services.md",
     "2-GENERAL DEVELOPMENT SKILLS/1-Git - Version Control.md",
     "2-GENERAL DEVELOPMENT SKILLS",
@@ -285,7 +314,6 @@
     "SQL/CURSOR.md",
     "SQL/CASE WHEN.md",
     "SQL",
-    "MICROSERVICE.md",
     "Excalidraw",
     "Başlıksız.canvas"
   ]

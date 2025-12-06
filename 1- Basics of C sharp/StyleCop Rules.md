@@ -30,7 +30,7 @@ StyleCop der ki: "Using ifadelerini (importları) namespace'in içine yazmalıs�
 
 C#
 
-```
+```csharp
 using System; // HATA! Namespace'in dışında.
 
 namespace BenimProjem
@@ -43,7 +43,7 @@ namespace BenimProjem
 
 C#
 
-```
+```csharp
 namespace BenimProjem
 {
     using System; // Aferin, kurala uydun.

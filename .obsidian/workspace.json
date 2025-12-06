@@ -75,12 +75,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2-GENERAL DEVELOPMENT SKILLS/3-HTTP - HTTPS PROTOCOL.md",
+                "file": "2-GENERAL DEVELOPMENT SKILLS/4- Data structures and algorithms.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "3-HTTP - HTTPS PROTOCOL"
+              "title": "4- Data structures and algorithms"
             }
           }
         ],
@@ -271,9 +271,11 @@
   },
   "active": "4f7c02702d772a33",
   "lastOpenFiles": [
-    "conflict-files-obsidian-git.md",
-    "2-GENERAL DEVELOPMENT SKILLS/3-HTTP - HTTPS PROTOCOL.md",
     "2-GENERAL DEVELOPMENT SKILLS/GENERAL DEVELOPMENT SKILLS Index.md",
+    "2-GENERAL DEVELOPMENT SKILLS/4- Data structures and algorithms.md",
+    "HTTP - HTTPS PROTOCOL.md",
+    "2-GENERAL DEVELOPMENT SKILLS/3-HTTP - HTTPS PROTOCOL.md",
+    "conflict-files-obsidian-git.md",
     "SQL/SQL Basics.md",
     "2-GENERAL DEVELOPMENT SKILLS/2-Repo Hosting Services.md",
     "2-GENERAL DEVELOPMENT SKILLS/1-Git - Version Control.md",
@@ -297,8 +299,6 @@
     "SQL/INDEX.md",
     "SQL/GROUP BY ,HAVING.md",
     "SQL/Database Relationships.md",
-    "SQL/CURSOR.md",
-    "SQL/CASE WHEN.md",
     "SQL",
     "Excalidraw",
     "Başlıksız.canvas"

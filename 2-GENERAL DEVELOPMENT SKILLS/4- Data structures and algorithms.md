@@ -84,7 +84,7 @@ Verilerin geliş-gidiş sırasını yönetmek için kullanılır.
     
 - **Metotlar:** `Push()` (ekle), `Pop()` (çıkar).
     
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VZ_1I_UuHdE?si=QMRu9syxD_SY836i" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 #### B. Queue (Kuyruk) - FIFO
 
 **First In First Out (İlk giren ilk çıkar).**
@@ -95,7 +95,7 @@ Verilerin geliş-gidiş sırasını yönetmek için kullanılır.
     
 - **.NET Kullanımı:** RabbitMQ gibi sistemleri öğrenirken bu mantığı kullanacaksın.
     
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6L94crb0PgA?si=Wj-zrIQ1rVgnTSLE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 ---
 
 ### 5. Advanced Structures (İleri Seviye)
@@ -103,10 +103,11 @@ Verilerin geliş-gidiş sırasını yönetmek için kullanılır.
 Bunları şu an detaylı kodlamana gerek yok ama ne olduğunu bilmelisin:
 
 - **Tree (Ağaç):** Klasör yapısı gibidir. Bir kök (root) ve dallar vardır. HTML DOM yapısı bir ağaçtır.
-    
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_T_7fqPfrrk?si=XWJUSccL1BLOoQB8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 - **Graph (Çizge):** Düğümlerin birbirine bağlandığı ağ. Sosyal ağlar (arkadaşlık ilişkileri) veya Haritalar (şehirler ve yollar) graph ile tutulur.
     
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CHHwJc1eFw8?si=1oaP3ZF-0f-sGh5Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 ---
 
 ### Pratik: C# ile Performans Farkı
@@ -115,7 +116,7 @@ Aşağıdaki C# örneği, `List` ile `Dictionary` arasındaki devasa farkı gös
 
 C#
 
-```
+```csharp
 // SENARYO: 1 Milyon kullanıcımız var ve ID'si 999.999 olanı arıyoruz.
 
 // 1. YÖNTEM: List (O(n))

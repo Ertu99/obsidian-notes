@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2-GENERAL DEVELOPMENT SKILLS/2-Repo Hosting Services.md",
+                "file": "1- Basics of C sharp/StyleCop Rules.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2-Repo Hosting Services"
+              "title": "StyleCop Rules"
             }
           },
           {
@@ -251,14 +251,17 @@
   },
   "active": "8d8fa30e7630931d",
   "lastOpenFiles": [
+    "1- Basics of C sharp/DOTNET CLI.md",
     "2-GENERAL DEVELOPMENT SKILLS/1-Git - Version Control.md",
-    "2-GENERAL DEVELOPMENT SKILLS/GENERAL DEVELOPMENT SKILLS Index.md",
     "2-GENERAL DEVELOPMENT SKILLS/2-Repo Hosting Services.md",
+    "2-GENERAL DEVELOPMENT SKILLS/3-HTTP - HTTPS PROTOCOL.md",
+    "SQL/Database Relationships.md",
+    "SQL/CURSOR.md",
+    "2-GENERAL DEVELOPMENT SKILLS/GENERAL DEVELOPMENT SKILLS Index.md",
     "1- Basics of C sharp/Basics of C sharp Index.md",
     "SQL/SQL Basics.md",
     "1- Basics of C sharp/StyleCop Rules.md",
     "2-GENERAL DEVELOPMENT SKILLS",
-    "1- Basics of C sharp/DOTNET CLI.md",
     "1- Basics of C sharp/DOTNET.md",
     "SQL/SQL.md",
     "SQL/CASE WHEN.md",
@@ -275,15 +278,12 @@
     "SQL/GROUP BY ,HAVING.md",
     "SQL/OUTPUT.md",
     "SQL/TRY - CATCH.md",
-    "SQL/Database Relationships.md",
-    "SQL/CURSOR.md",
     "SQL/TRANSACTION.md",
     "SQL/INDEX.md",
     "SQL/Başlıksız",
     "SQL/TRIGGER.md",
     "SQL/VIEW ,FUNCTION, STORED PROCEDURE.md",
     "SQL",
-    "DAPPER.md",
     "Excalidraw"
   ]
 }

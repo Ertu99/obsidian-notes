@@ -8,7 +8,7 @@ Raporun temel amacı, okuyucuya sadece bir veri yapısının nasıl kullanılaca
 
 ## Bölüm 1: Algoritmik Karmaşıklık Analizi ve Teorik Temeller
 
-Yazılım sistemlerinin performansını değerlendirmek ve karşılaştırmak için kullanılan evrensel dil, asimptotik analiz veya yaygın bilinen adıyla Big O notasyonudur. Bu notasyon, bir algoritmanın girdi boyutu ($n$) arttıkça çalışma süresinin veya bellek gereksiniminin nasıl değiştiğini (büyüme hızını) matematiksel olarak modeller.2
+Yazılım sistemlerinin performansını değerlendirmek ve karşılaştırmak için kullanılan evrensel dil, asimptotik analiz veya yaygın bilinen adıyla Big O notasyonudur. Bu notasyon, bir algoritmanın girdi boyutu ($n$) arttıkça çalışma süresinin veya bellek gereksiniminin nasıl değiştiğini (büyüme hızını) matematiksel olarak modeller.
 
 ### 1.1 Asimptotik Notasyonlar: O, $\Omega$ ve $\Theta$
 
@@ -49,8 +49,12 @@ Alan karmaşıklığı, algoritmanın çalışması sırasında ihtiyaç duyduğ
 .NET bellek yönetimi iki ana bölgeye ayrılır:
 
 1. **Stack (Yığın):** Çok hızlıdır, LIFO (Last-In, First-Out) mantığıyla çalışır ve işlemci önbelleği (L1/L2 Cache) ile son derece uyumludur. Metot çağrıları, yerel değişkenler ve değer tipleri burada saklanır. Stack üzerindeki bellek yönetimi deterministiktir; bir metot bittiğinde (scope dışına çıkıldığında) bellek anında serbest bırakılır.10
-    
-2. **Heap (Öbek):** Daha büyük ve kaotik bir bellek alanıdır. Referans tipleri (`class`, `interface`, `delegate`, `string`, `array`) burada yaşar. Heap üzerindeki nesnelerin yaşam döngüsü Garbage Collector (GC) tarafından yönetilir. Heap'ten bellek tahsis etmek (allocation), Stack'e göre daha maliyetlidir çünkü GC'nin boş bir blok bulması ve yönetmesi gerekir.10
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VZ_1I_UuHdE?si=Q6eLk-m5BoURLmqx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+1. **Heap (Öbek):** Daha büyük ve kaotik bir bellek alanıdır. Referans tipleri (`class`, `interface`, `delegate`, `string`, `array`) burada yaşar. Heap üzerindeki nesnelerin yaşam döngüsü Garbage Collector (GC) tarafından yönetilir. Heap'ten bellek tahsis etmek (allocation), Stack'e göre daha maliyetlidir çünkü GC'nin boş bir blok bulması ve yönetmesi gerekir.10
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OVTXS2YlpnQ?si=jFmI5OYipZj_mfHJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     
 
 ### 2.2 Değer Tipleri ve Referans Tipleri
@@ -123,7 +127,7 @@ Büyük bir liste oluşturup ardından elemanların çoğunu sildiğinizde, list
 .NET'teki `LinkedList<T>`, çift yönlü bağlı liste (doubly linked list) implementasyonudur. Her eleman (`LinkedListNode<T>`), verinin kendisini, bir önceki düğüme (`Previous`) ve bir sonraki düğüme (`Next`) olan referansları tutan bir nesnedir.24
 
 Teorik olarak, bağlı listenin arasına eleman eklemek veya çıkarmak $O(1)$ karmaşıklığındadır (sadece pointer'ları güncellemek yeterlidir). Oysa `List<T>` yapısında araya ekleme yapmak, o noktadan sonraki tüm elemanların kaydırılmasını gerektirdiği için $O(n)$ maliyetindedir.
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/QAC4JDcwZo4?si=hYEImWom_DaXDNIa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 ### 4.2 Önbellek Lokalitesi (Cache Locality) Analizi
 
 Kağıt üzerindeki bu $O(1)$ avantajı, modern donanımlarda çoğu zaman yanıltıcıdır. `LinkedList<T>` düğümleri Heap üzerinde rastgele bellek adreslerinde oluşturulur. Bir düğümden diğerine geçmek ("pointer chasing"), işlemcinin sürekli olarak farklı bellek sayfalarına erişmesini gerektirebilir.
@@ -193,9 +197,12 @@ Dictionary performansının kalbi `GetHashCode` metodudur.
 Bu iki veri yapısı da arka planda dizi (`T`) kullanır ve `List<T>` gibi dinamik olarak büyür.
 
 - **Stack (LIFO):** Son giren ilk çıkar. DFS algoritmalarında, geri alma (undo) işlemlerinde ve sözdizimi analizinde (parsing) kullanılır.
-    
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VZ_1I_UuHdE?si=Q6eLk-m5BoURLmqx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 - **Queue (FIFO):** İlk giren ilk çıkar. BFS algoritmalarında, mesaj kuyruklarında ve işlem sıraya almada kullanılır. `Queue<T>`, performansı artırmak için "Dairesel Tampon" (Circular Buffer) mantığıyla çalışır. Dizinin başından eleman silindiğinde (Dequeue), diğer elemanlar kaydırılmaz; sadece "baş" (head) ve "kuyruk" (tail) indeksleri güncellenir. Bu sayede hem ekleme hem çıkarma $O(1)$ karmaşıklığındadır.35
-    
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6L94crb0PgA?si=AsiESzf1UeqF4HrZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ### 6.2 `PriorityQueue<TElement, TPriority>` (.NET 6+)
 
@@ -213,6 +220,7 @@ Standart "Binary Heap" (İkili Yığın) yapısında her düğümün 2 çocuğu 
 ## Bölüm 7: Ağaçlar ve Sıralı Veri Yapıları
 
 Verilerin belirli bir düzende (genellikle anahtara göre sıralı) saklanması gerektiğinde, Hash tabanlı yapılar yetersiz kalır (çünkü hash sırasızdır). Burada ağaç tabanlı yapılar devreye girer.
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_T_7fqPfrrk?si=8RdyZH1-1I6HgaRR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ### 7.1 `SortedDictionary` vs `SortedList`: Ezeli Rekabet
 
@@ -255,9 +263,13 @@ Bu hibrit yapı,.NET sıralama fonksiyonlarının hem çok hızlı hem de "köt�
 
 Sıralı bir `List<T>` veya dizi üzerinde `BinarySearch` metodu kullanıldığında, "Böl ve Yönet" prensibiyle arama yapılır. Ortadaki elemana bakılır, aranan değer büyükse sağ taraf, küçükse sol taraf seçilir ve işlem tekrarlanır. Karmaşıklık $O(\log n)$'dir. 1 milyar elemanlı sıralı bir listede, aranan değeri bulmak en fazla 30 adım sürer. `List<T>.Contains` ($O(n)$) ile kıyaslandığında devasa bir performans farkı yaratır.8
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_T_7fqPfrrk?si=8RdyZH1-1I6HgaRR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ## Bölüm 9: Grafikler (Graphs) ve Temsil Yöntemleri
 
 .NET BCL içinde yerleşik bir `Graph` sınıfı yoktur, ancak geliştiriciler ihtiyaçlarına göre grafikleri iki temel yöntemle modeller.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CHHwJc1eFw8?si=9mA8cV1rU-0kCZVW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ### 9.1 Komşuluk Listesi (Adjacency List) vs. Matrisi (Adjacency Matrix)
 

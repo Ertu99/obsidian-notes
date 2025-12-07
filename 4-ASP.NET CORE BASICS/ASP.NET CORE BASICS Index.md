@@ -2,3 +2,5 @@
 [[2-REST]]
 [[3-Minimal APIs]]
 [[4- Middlewares]]
+[[5-Filters and Attributes]]
+[[6-App Settings and Configurations]]

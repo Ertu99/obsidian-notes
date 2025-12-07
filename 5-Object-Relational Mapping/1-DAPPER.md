@@ -65,7 +65,7 @@ Aşağıdaki `DapperContext` sınıfı, konfigürasyon dosyasından (`appsetting
 
 C#
 
-```
+```csharp
 public class DapperContext
 {
     private readonly IConfiguration _configuration;
@@ -110,7 +110,7 @@ Birden fazla kaydın çekildiği senaryolarda `QueryAsync` metodu `IEnumerable<T
 
 C#
 
-```
+```csharp
 public async Task<IEnumerable<Urun>> TumUrunleriGetirAsync()
 {
     var sql = "SELECT Id, Ad, Fiyat FROM Urunler";
@@ -144,7 +144,7 @@ INSERT, UPDATE ve DELETE işlemleri (Data Manipulation Language - DML) için `Ex
 
 C#
 
-```
+```csharp
 public async Task<int> UrunGuncelleAsync(Urun urun)
 {
     var sql = "UPDATE Urunler SET Ad = @Ad, Fiyat = @Fiyat WHERE Id = @Id";
@@ -164,7 +164,7 @@ Bu örnekte Dapper'ın **Parametre Enjeksiyonu** özelliği görülmektedir. SQL
 
 C#
 
-```
+```csharp
 // SQL Server için SCOPE_IDENTITY() kullanımı
 var sql = @"INSERT INTO Urunler (Ad, Fiyat) VALUES (@Ad, @Fiyat); 
             SELECT CAST(SCOPE_IDENTITY() as int);";
@@ -193,7 +193,7 @@ Gerçek hayat senaryolarında, basit nesne-parametre eşleşmesi her zaman yeter
 
 C#
 
-```
+```csharp
 var parametreler = new DynamicParameters();
 parametreler.Add("@KullaniciId", 101);
 parametreler.Add("@ToplamTutar", dbType: DbType.Decimal, direction: ParameterDirection.Output);
@@ -214,7 +214,7 @@ Bir e-ticaret uygulamasında "Sepetteki şu ürünlerin detaylarını getir" gib
 
 C#
 
-```
+```csharp
 var urunIdleri = new { 1, 5, 12, 20 };
 var sql = "SELECT * FROM Urunler WHERE Id IN @Idler";
 
@@ -240,7 +240,7 @@ Bir SQL JOIN işlemi sonucunda, hem `Siparis` hem de `Musteri` bilgilerini içer
 
 C#
 
-```
+```csharp
 var sql = @"SELECT s.Id, s.Tarih, m.Id, m.Ad 
             FROM Siparisler s 
             INNER JOIN Musteriler m ON s.MusteriId = m.Id";
@@ -265,7 +265,7 @@ Bir siparişin birden fazla kalemi olduğunda (One-to-Many), SQL sorgusu sipari�
 
 C#
 
-```
+```csharp
 var sql = @"SELECT s.Id, s.Tarih, k.Id, k.UrunAdi, k.Fiyat 
             FROM Siparisler s 
             INNER JOIN SiparisKalemleri k ON s.Id = k.SiparisId";
@@ -300,7 +300,7 @@ Performansın en üst düzeye çıkarılması gereken dashboard (gösterge panel
 
 C#
 
-```
+```csharp
 var sql = @"SELECT * FROM Kullanicilar WHERE Id = @Id; 
             SELECT * FROM Siparisler WHERE KullaniciId = @Id;";
 
@@ -318,7 +318,7 @@ Günümüz veritabanlarında (SQL Server, PostgreSQL) JSON formatında veri sakl
 
 C#
 
-```
+```csharp
 public class JsonTypeHandler<T> : SqlMapper.TypeHandler<T>
 {
     public override void SetValue(IDbDataParameter parameter, T value)
@@ -363,7 +363,7 @@ Dapper varsayılan olarak "Buffered" (Tamponlanmış) modda çalışır. Yani, s
 
 C#
 
-```
+```csharp
 // Unbuffered kullanım
 var veriler = await connection.QueryAsync<LogKaydi>(sql, buffered: false);
 ```
@@ -384,7 +384,7 @@ En temel yöntem, `IDbTransaction` nesnesini manuel yönetmektir. Burada dikkat 
 
 C#
 
-```
+```csharp
 using (var connection = _context.CreateConnection())
 {
     connection.Open();
@@ -413,7 +413,7 @@ using (var connection = _context.CreateConnection())
 
 C#
 
-```
+```csharp
 using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
 {
     await connection.ExecuteAsync(sql1);
@@ -457,7 +457,7 @@ Mikroservisler, ağ hatalarının ve geçici veritabanı kesintilerinin (Transie
 
 C#
 
-```
+```csharp
 // Geçici hataları (Transient) algılayan ve üstel bekleme (Exponential Backoff) yapan politika
 var retryPolicy = Policy
    .Handle<SqlException>(ex => IsTransient(ex)) // IsTransient metodu hata kodlarını kontrol eder

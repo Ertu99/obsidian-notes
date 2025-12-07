@@ -153,3 +153,76 @@ EF Core'a "Bu alan zorunlu", "Bu alanın tipi VARCHAR(50)" gibi ayarları nasıl
 
 ---
 
+### Entities (Varlıklar) - POCO ve Domain Model
+
+Metinde "objects in an application" olarak geçen kısımdır.
+
+**Mühendislik Derinliği:** EF Core'da Entity'ler genellikle **POCO (Plain Old CLR Object)** olarak tasarlanır. Yani, sınıfın içinde EF Core'a dair hiçbir kütüphane (`using Microsoft.EntityFrameworkCore;`) olmamalıdır. Bu, **Clean Architecture** prensibidir. Domain katmanı veritabanından habersiz olmalıdır.
+
+- **Anemic Domain Model (Kansız Model):** Sadece `get; set;` barındıran, içi boş sınıflar. (Genelde Anti-Pattern kabul edilir ama yaygındır).
+    
+- **Rich Domain Model (Zengin Model):** Kendi içinde validation (doğrulama) ve business logic barındıran sınıflar. EF Core, "Backing Fields" özelliği ile bu zengin modelleri (Private set'leri olsa bile) yönetebilir.
+    
+
+### Mapping (Haritalama) - Köprü Mühendisliği
+
+"Maps the objects... to the database tables" kısmı.
+
+C# tipleri ile SQL tipleri birebir uyuşmaz.
+
+- C#: `string` (Sınırsız olabilir) -> SQL: `NVARCHAR(MAX)` mı `VARCHAR(50)` mi?
+    
+- C#: `decimal` -> SQL: `MONEY` mi `DECIMAL(18,2)` mi?
+    
+
+EF Core burada 3 yöntem sunar:
+
+1. **Conventions (Varsayılanlar):** `Id` isimli bir property görürse "Ha, bu Primary Key'dir" der.
+    
+2. **Data Annotations (Etiketler):** `[MaxLength(50)]` gibi attribute'lar.
+    
+3. **Fluent API (En Güçlüsü):** `OnModelCreating` içinde ince ayar.
+    
+
+**Gelişmiş Özellik: Shadow Properties** Bazen veritabanında bir sütun olsun istersin (örn: `LastUpdated`), ama C# Entity sınıfında bu property gözüksün istemezsin (kod kirliliği olmasın). Mapping katmanında bunu "Shadow Property" olarak tanımlarsın. EF Core bunu arka planda yönetir, sen kodda görmezsin.
+
+### Context (Bağlam) - Oturum Yönetimi
+
+Metinde geçen "Context", yani `DbContext`.
+
+Bunu "Veritabanı ile açılan güvenli bir tünel" olarak düşün. **Kritik Uyarı (Thread Safety):** `DbContext` **Thread-Safe DEĞİLDİR.** Aynı anda (paralel) iki farklı thread üzerinden aynı `context` nesnesini kullanarak işlem yapmaya çalışırsan uygulama patlar. Bu yüzden Web projelerinde her istek (Request) için yeni bir Context yaratılır ve iş bitince çöpe atılır (Scoped Lifetime).
+
+###  Queries (Sorgular) - LINQ to Entities
+
+"Queries" kısmı. EF Core, yazdığın C# kodunu (LINQ) alır ve SQL'e çevirir.
+
+**Deferred Execution (Ertelenmiş Çalışma):** Bu kavramı anlamak hayati önem taşır.
+
+C#
+
+```csharp
+var sorgu = context.Users.Where(u => u.Age > 18); // SQL gitmedi. Sadece tanım yapıldı.
+var sonuc = sorgu.ToList(); // !!! SQL ŞİMDİ GİTTİ !!!
+```
+
+Sorguyu tanımlamak bedavadır, çalıştırmak (`ToList`, `Count`, `FirstOrDefault`) maliyetlidir. Bir döngü içinde yanlışlıkla sorguyu çalıştırırsan (Iteration), performansın çöker.
+
+### Caching (Önbellekleme)
+
+Metinde geçen "Caching". EF Core'da iki seviye önbellek vardır:
+
+1. **First Level Cache (L1 - Context Cache):**
+    
+    - Her `DbContext`'in kendi içindedir.
+        
+    - Aynı Context yaşam döngüsü içinde, aynı ID'li veriyi 2 kere istersen ( `Find(1)` ), ikinci seferde veritabanına gitmez, hafızadan verir.
+        
+    - _Web uygulamalarında etkisi azdır_ çünkü her istekte Context yeniden yaratılır ve silinir.
+        
+2. **Second Level Cache (L2 - Distributed Cache):**
+    
+    - EF Core'un içinde gömülü gelmez (Hibernate'te vardır).
+        
+    - Redis veya NCache gibi araçlarla **senin kurman gerekir.**
+        
+    - Tüm uygulama genelinde (Context'ler arası) veriyi saklar. Veritabanı trafiğini %90 azaltabilir.

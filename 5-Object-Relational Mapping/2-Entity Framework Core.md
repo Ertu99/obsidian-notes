@@ -226,3 +226,276 @@ Metinde geçen "Caching". EF Core'da iki seviye önbellek vardır:
     - Redis veya NCache gibi araçlarla **senin kurman gerekir.**
         
     - Tüm uygulama genelinde (Context'ler arası) veriyi saklar. Veritabanı trafiğini %90 azaltabilir.
+
+
+
+
+EF Core kullanan çoğu geliştirici sadece `context.SaveChanges()` der ve sihrin gerçekleşmesini bekler. Ama bir **Backend Mühendisi**, o sihrin arkasında dönen çarkları bilmek zorundadır. Özellikle performans optimizasyonu (Bulk işlemler) ve karmaşık güncelleme senaryoları (Disconnected Entities) için bu API'yi manuel yönetmen gerekecek.
+
+---
+
+### 1. Change Tracker Nedir? (Felsefe: Gözetim Kulesi)
+
+`ChangeTracker`, `DbContext` sınıfının içinde yaşayan ve hafızadaki tüm nesnelerin (Entity) "o anki durumunu" gözetleyen bir birimdir.1
+
+Şunu hayal et: Bir otoparkın (DbContext) güvenlik kulesindesin. Otoparka giren her arabayı (Entity) izliyorsun.
+
+- Bu araba yeni mi girdi? (`Added`)
+    
+- Rengi mi değişti? (`Modified`)
+    
+- Çıkış mı yaptı? (`Deleted`)
+    
+- Yoksa öylece duruyor mu? (`Unchanged`)
+    
+
+Sen `SaveChanges()` butonuna bastığında, güvenlik görevlisi (Change Tracker) elindeki bu listeye bakar ve veritabanına sadece gerekli komutları (`INSERT`, `UPDATE`, `DELETE`) gönderir.
+
+---
+
+### 2. Entity States (5 Temel Durum)
+
+Change Tracker API'yi anlamak için, bir nesnenin alabileceği 5 durumu adın gibi bilmelisin. Her nesne herhangi bir anda bu durumlardan sadece birinde olabilir.
+
+1. **Detached (Kopuk):** Entity hafızada var (C# nesnesi olarak), ama `DbContext` bundan haberdar değil. Gözetim altında değil. Veritabanına kaydedilmez.
+    
+    - _Örnek:_ `var user = new User();` (Henüz `Add` demedin).
+        
+2. **Unchanged (Değişmemiş):** Veritabanından çekildi ve üzerinde hiçbir değişiklik yapılmadı. `SaveChanges` çağrılırsa hiçbir şey olmaz.
+    
+3. **Added (Eklenmiş):** Context'e yeni eklendi (`.Add()`).2 Henüz veritabanında yok. `SaveChanges` sırasında `INSERT` sorgusu üretilir.3
+    
+4. **Modified (Değiştirilmiş):** Veritabanından geldi ama en az bir özelliği (Property) değişti. `SaveChanges` sırasında `UPDATE` sorgusu üretilir.4
+    
+5. **Deleted (Silinmiş):** Context üzerinden silindi (`.Remove()`).5 Veritabanında hala var ama `SaveChanges` sırasında `DELETE` sorgusu ile silinecek.
+    
+
+---
+
+### 3. API'ye Erişim ve Manuel Müdahale
+
+Çoğu zaman EF Core durumları otomatik yönetir. Ama bazen senin müdahale etmen gerekir.
+
+**Erişim Yöntemleri:**
+
+- `context.ChangeTracker`: Tüm izlenen nesnelere erişim sağlar.
+    
+- `context.Entry(entity)`: Tek bir nesnenin durumuna erişim sağlar.6
+    
+
+Mühendislik Örneği (Disconnected Scenario):
+
+Bir API yazdın. Kullanıcı sana bir JSON gönderdi (User ID: 5, Name: "Yeni İsim"). Bu nesne senin hafızanda yeni (new User) olduğu için durumu Detached. Ama sen bunun veritabanında var olduğunu ve güncellenmesi gerektiğini biliyorsun. EF Core'a bunu nasıl anlatırsın?
+
+C#
+
+```csharp
+public void UpdateUser(User user)
+{
+    // YÖNTEM 1: Klasik (Pahalı)
+    // Önce DB'den çek, sonra değiştir. (2 Sorgu: SELECT + UPDATE)
+    var existing = context.Users.Find(user.Id);
+    existing.Name = user.Name;
+    context.SaveChanges();
+
+    // YÖNTEM 2: Change Tracker API (Performanslı)
+    // DB'den çekmeye gerek yok! (Tek Sorgu: UPDATE)
+    context.Attach(user); // Durumu 'Unchanged' yap
+    context.Entry(user).State = EntityState.Modified; // Durumu elle 'Modified' yap
+    context.SaveChanges();
+}
+```
+
+Yöntem 2'de, veritabanına gitmeden (SELECT atmadan) nesneyi "sanki oradan gelmiş ve değişmiş gibi" sisteme tanıttık. Bu, Change Tracker API'nin gücüdür.
+
+---
+
+### 4. `Update` vs Property Modification (Kritik Fark)
+
+Mülakatlarda çok sorulan bir detaydır.
+
+**Senaryo:** Kullanıcı sadece "Email" adresini değiştirdi.
+
+- **Yaklaşım A:** `user.Email = "yeni@mail.com";`
+    
+    - Change Tracker, sadece `Email` alanının değiştiğini fark eder.
+        
+    - Oluşan SQL: `UPDATE Users SET Email = '...' WHERE Id = 5`
+        
+    - _Sonuç:_ Optimize ve doğru.
+        
+- **Yaklaşım B:** `context.Users.Update(user);`
+    
+    - `Update` metodu, nesnenin **tüm alanlarını** `Modified` olarak işaretler.
+        
+    - Oluşan SQL: `UPDATE Users SET Name='...', Email='...', Age=... WHERE Id = 5`
+        
+    - _Sonuç:_ Gereksiz yere tüm sütunları günceller. Eğer o sırada başka biri "Age" alanını değiştirmişse, sen `Update` ile onun değişikliğini (eski veriyle) ezersin (**Last Write Wins** sorunu).
+        
+
+**Ders:** `context.Update()` metodunu, sadece tüm nesneyi gerçekten değiştirmek istiyorsan kullan. Aksi takdirde property bazlı değişiklik yap.
+
+---
+
+### 5. Debugging: `ChangeTracker.DebugView`
+
+Kodun çalışıyor ama `SaveChanges` beklediğin şeyi yapmıyor mu? EF Core 5.0 ile gelen muazzam bir özellik var. Kodunu debug ederken `context.ChangeTracker.DebugView.LongView` özelliğine bakabilirsin.
+
+Sana şöyle bir rapor verir:
+
+Plaintext
+
+```
+User {Id: 1} Unchanged
+  Id: 1 PK
+  Name: 'Ahmet' (Modified) OriginalValue: 'Mehmet'
+  Email: 'a@b.com'
+Order {Id: 10} Added
+  ...
+```
+
+Hangi nesne hangi durumda, hangi alan değişmiş, eski değeri neymiş; hepsini röntgen çeker gibi görürsün.
+
+---
+
+### 6. Performans: `AutoDetectChangesEnabled`
+
+EF Core, sen her `context.Users.Add(user)` dediğinde veya `SaveChanges` çağırdığında, hafızadaki binlerce nesneyi tarayıp "Değişen var mı?" diye kontrol eder (`DetectChanges`).
+
+Senaryo: 10.000 adet kayıt ekleyeceksin (Bulk Insert).
+
+Döngü içinde 10.000 kere Add dersen, EF Core her seferinde DetectChanges çalıştırır. İşlem süresi karesel (Exponential) artar.
+
+**Çözüm:**
+
+C#
+
+```csharp
+// Gözetlemeyi geçici olarak kapat
+context.ChangeTracker.AutoDetectChangesEnabled = false;
+
+foreach(var user in users)
+{
+    context.Users.Add(user); // Artık çok hızlı, kontrol yapmıyor
+}
+
+// En sonda bir kere manuel çalıştır
+context.ChangeTracker.DetectChanges();
+context.SaveChanges();
+```
+
+Bu yöntemle 1 dakikalık işlemi 1 saniyeye indirebilirsin.
+
+---
+
+Özellikle metinde geçen **"Lazy Loading varsayılan davranıştır"** cümlesine dikkat! Bu, eski **Entity Framework 6 (.NET Framework)** için doğruydu. Ancak senin öğrendiğin modern **EF Core**'da varsayılan davranış **"Hiçbir Şeyi Yükleme" (null)** dir. Lazy Loading'i açmak için ekstra paket ve konfigürasyon gerekir. Bu hayati farkı bilmezsen sürekli `NullReferenceException` alırsın.
+
+Bu üç stratejiyi, arka planda oluşturdukları SQL sorguları ve **Trade-off (Ödünleşim)** analizleriyle inceleyelim.
+
+---
+
+### 1. Eager Loading (Hırslı Yükleme) - "Peşin Peşin Al"
+
+Veritabanına gitmişken "Ana veriyi alırken ilişkili verileri de (Çocukları) yanına kat getir" demektir.
+
+- **Nasıl Yapılır?** `Include()` ve `ThenInclude()` metotları ile.
+    
+- **SQL Karşılığı:** `INNER JOIN` veya `LEFT JOIN`.
+    
+- **Avantajı:** Tek bir veritabanı turu (Roundtrip). Ağ trafiği için harikadır.
+    
+
+Mühendislik Riski: Cartesian Explosion (Kartezyen Patlaması)
+
+Eager Loading masum görünür ama tehlikelidir.
+
+Senaryo: 100 Kullanıcı, her birinin 50 Siparişi, her siparişin 10 Detayı var.
+
+context.Users.Include(u => u.Orders).ThenInclude(o => o.Details).ToList()
+
+- SQL Server sana `100 x 50 x 10 = 50.000` satırlık devasa bir tablo döndürür.
+    
+- Her satırda Kullanıcı bilgileri (Ad, Soyad) 500 kere tekrar eder.
+    
+- **Sonuç:** Ağ tıkanır, RAM şişer.
+    
+
+**Çözüm (Split Queries):** EF Core 5.0 ile gelen `.AsSplitQuery()` metodu. "Tek bir dev JOIN atma, önce kullanıcıları çek, sonra siparişleri çek, bellekte birleştir" der.
+
+---
+
+### 2. Lazy Loading (Tembel Yükleme) - "Lazım Olursa Al"
+
+Ana veriyi çekersin. İlişkili veriye (`user.Orders`) kod içinde eriştiğin **o anda** veritabanına gidip çeker.
+
+- **EF Core'da Kurulum (Default Değildir!):**
+    
+    1. `Microsoft.EntityFrameworkCore.Proxies` paketini yükle.
+        
+    2. `DbContext` ayarlarında `.UseLazyLoadingProxies()` de.
+        
+    3. Entity sınıflarındaki ilişkili property'lere **`virtual`** keyword'ünü ekle (`public virtual ICollection<Order> Orders { get; set; }`).
+        
+- **Nasıl Çalışır?** EF Core, senin sınıfından miras alan dinamik bir sınıf (Proxy) üretir. Sen `Orders` property'sine dokunduğunda (get), araya giren kod veritabanına sorgu atar.
+    
+
+Mühendislik Riski: N+1 Problemi
+
+Bunu daha önce konuşmuştuk ama tekrar edelim çünkü Lazy Loading'in ölümcül günahıdır.
+
+C#
+
+```csharp
+var users = context.Users.ToList(); // 1 Sorgu (SELECT * FROM Users)
+
+foreach (var user in users) 
+{
+    // DÖNGÜ İÇİNDE SQL ÇAĞRISI!
+    Console.WriteLine(user.Orders.Count); 
+}
+```
+
+1000 kullanıcı varsa, 1001 sorgu atılır. Veritabanı CPU'su tavan yapar.
+
+---
+
+### 3. Explicit Loading (Açık Yükleme) - "Manuel Kontrol"
+
+Ne Eager gibi baştan alır, ne Lazy gibi gizlice arkadan alır. Verinin ne zaman yükleneceğine tamamen **sen karar verirsin.**
+
+- **Nasıl Yapılır?** `context.Entry(...)` API'si ile.
+    
+- **Kullanım Alanı:** Koşullu yükleme.
+    
+
+C#
+
+```csharp
+var user = context.Users.Find(1); // Sadece User geldi
+
+if (user.IsVip) 
+{
+    // Sadece VIP ise siparişlerini yükle
+    context.Entry(user)
+           .Collection(u => u.Orders)
+           .Load(); 
+}
+```
+
+- **Query ile Filtreleme:** Explicit loading'in en büyük gücü, yüklerken filtreleme yapabilmesidir.
+    
+    C#
+    
+    ```csharp
+    context.Entry(user)
+           .Collection(u => u.Orders)
+           .Query() // Henüz yükleme, sorguya devam et
+           .Where(o => o.Price > 1000) // Sadece 1000 TL üzeri siparişleri getir
+           .Load();
+    ```
+    
+    Bu özelliği `Include` (Eager) ile de yapabilirsin (EF Core 5+) ama Explicit Loading daha granüler kontrol sağlar.
+    
+
+---
+

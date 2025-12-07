@@ -499,3 +499,134 @@ if (user.IsVip)
 
 ---
 
+ EF Core'un final konusu ve modern yazılım geliştirmede en sık kullanılan, en çok hata yapılan özellik: **Code First Migrations**.
+
+ORM kullanmanın en büyük avantajı, veritabanı şemasını (Tabloları, Sütunları) SQL yazarak değil, C# class'larını değiştirerek yönetmektir. Ancak bu güç, büyük sorumluluk getirir. Yanlış bir migration, Production ortamındaki **tüm veriyi silebilir.**
+
+Bu konuyu sadece "komut yaz çalıştır" olarak değil, **Schema Versioning (Şema Versiyonlama)** stratejisi ve **CI/CD Pipeline** uyumu üzerinden mühendislik derinliğinde inceleyeceğiz.
+
+---
+
+### 1. Felsefe: Veritabanını Git Gibi Yönetmek
+
+Eskiden (Database First), veritabanında bir değişiklik yapıldığında (örn: `Users` tablosuna `Age` ekle), bu değişikliği diğer geliştiricilere veya Canlı ortama (Production) taşımak için `.sql` dosyaları elden ele dolaşırdı.
+
+**Code First Migrations**, veritabanının versiyon kontrol sistemidir.
+
+- **Snapshot (Anlık Görüntü):** Veritabanının şu anki halini bilir.
+    
+- **Diff (Fark):** Senin C# kodunda yaptığın değişikliği algılar.
+    
+- **Patch (Yama):** Aradaki farkı kapatacak SQL kodunu (`ALTER TABLE...`) otomatik üretir.
+    
+
+---
+
+### 2. Mekanizma: Nasıl Çalışır? (Kaputun Altı)
+
+Sen `Add-Migration` komutunu çalıştırdığında EF Core, C# kodunu (Entity) veritabanı ile karşılaştırmaz. **Burası çok yanlış bilinir.**
+
+EF Core şu üçlüyü karşılaştırır:
+
+1. **C# Entity Class'ları:** Senin son yazdığın kod.
+    
+2. **`DbContextModelSnapshot.cs`:** `Migrations` klasöründe duran, veritabanının (bildiği kadarıyla) son hali.
+    
+3. **Veritabanı (`__EFMigrationsHistory` Tablosu):** Hangi migration'ların uygulandığını tutan özel tablo.
+    
+
+Eğer C# kodunda `User` sınıfına `string Phone` eklediysen; EF Core, Snapshot'a bakar, "Bende Phone yoktu" der ve aradaki fark için bir Migration dosyası üretir.
+
+---
+
+### 3. Bir Migration Dosyasının Anatomisi (`Up` vs `Down`)
+
+Oluşturulan her migration sınıfında iki kritik metot vardır:
+
+1. **`Up()` (İleri Git):** Değişikliği uygular.
+    
+    - _Örnek:_ `CreateTable(...)`, `AddColumn(...)`
+        
+2. **`Down()` (Geri Al):** Yapılan değişikliği geri alır.
+    
+    - _Örnek:_ `DropTable(...)`, `DropColumn(...)`
+        
+
+**Mühendislik Kuralı:** `Down` metodu her zaman `Up` metodunun tam tersi olmalıdır. Böylece bir hata anında `Update-Database <ÖncekiMigration>` diyerek sistemi güvenle geri alabilirsin.
+
+---
+
+### 4. Kritik Komutlar ve Yaşam Döngüsü
+
+Terminalde (veya Package Manager Console'da) en sık kullanacağın komutlar:
+
+1. **`Add-Migration <Isim>`:**
+    
+    - C# kodundaki değişiklikleri algılar ve yeni bir `.cs` migration dosyası oluşturur. Veritabanına dokunmaz.
+        
+    - _İsimlendirme Önemlidir:_ `AddColumnAgeToUsers` gibi açıklayıcı isimler ver. `Migration1`, `Deneme` gibi isimler verme.
+        
+2. **`Update-Database`:**
+    
+    - Bekleyen migration'ları (`__EFMigrationsHistory` tablosuna bakarak) bulur ve veritabanına uygular.
+        
+3. **`Script-Migration` (Profesyonel Yöntem):**
+    
+    - Migration'ı doğrudan uygulamak yerine, çalıştıracağı **SQL kodunu** sana verir.
+        
+    - _Neden?_ DBA (Veritabanı Yöneticisi), kodu Production'a atmadan önce incelemek isteyebilir.
+        
+4. **`Remove-Migration`:**
+    
+    - Henüz veritabanına **uygulanmamış** son migration'ı siler. Hatalı oluşturduysan kullanırsın.
+        
+
+---
+
+### 5. Mühendislik Tuzağı: Veri Kaybı (Data Loss)
+
+Bu konuyu "derinlemesine" istediğin için en büyük riski anlatıyorum: **Rename (Yeniden İsimlendirme).**
+
+**Senaryo:** `Users` tablosundaki `FullName` sütununun adını `Name` olarak değiştirmek istedin.
+
+1. C# kodunda `FullName`'i sildin, `Name` yazdın.
+    
+2. `Add-Migration` dedin.
+    
+
+**EF Core Ne Görür?**
+
+- "Hımm, `FullName` diye bir şey yok olmuş -> `DropColumn(FullName)`"
+    
+- "Hımm, `Name` diye yeni bir şey gelmiş -> `AddColumn(Name)`"
+    
+
+**Sonuç:** `Update-Database` dediğin an, `FullName` sütunu içindeki **tüm verilerle birlikte silinir.** Yeni boş bir `Name` sütunu açılır. Veri kaybı yaşanır.
+
+**Çözüm:** Migration dosyasını açıp manuel müdahale etmelisin: `migrationBuilder.RenameColumn(name: "FullName", newName: "Name")`.
+
+---
+
+### 6. Production Stratejisi: `Migrate()` on Startup?
+
+Yazılımcılar genelde `Program.cs` içine şunu yazar:
+
+C#
+
+```csharp
+// Uygulama başlarken otomatik migrate et
+using (var scope = app.Services.CreateScope()) {
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate(); 
+}
+```
+
+**Mühendislik Uyarısı:** Bu kod küçük projelerde harikadır. Ama **High-Scale (Yüksek Trafikli)** ve **Cluster (Küme)** ortamlarda (Kubernetes gibi) felakettir.
+
+- Neden? Aynı anda 5 tane sunucu (Pod) ayağa kalkarsa, 5'i birden aynı anda veritabanı şemasını değiştirmeye çalışır (**Concurrency Conflict**). Veritabanı kilitlenir (Deadlock).
+    
+- **Doğrusu:** CI/CD pipeline içinde (GitHub Actions vb.) `Script-Migration` ile SQL üretip, deploy aşamasında tek bir yetkili servisin bunu çalıştırmasıdır.
+    
+
+---
+

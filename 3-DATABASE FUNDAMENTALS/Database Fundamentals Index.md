@@ -2,3 +2,5 @@
 [[1-SQL Basics]]
 [[2-Database Design Basics]]
 [[3- Stored Procedures]]
+[[4-Constraints]]
+[[5-Triggers]]

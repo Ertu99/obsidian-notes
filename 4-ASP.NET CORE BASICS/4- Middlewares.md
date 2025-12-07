@@ -150,3 +150,70 @@ Bu mekanizma, kötü niyetli botları engellemek veya IP banlamak için kullanı
 
 ---
 
+Middleware'lerin **çift yönlü (Request/Response)** çalışma mantığını ve sırasını test edelim.
+
+**Senaryo:** `Program.cs` dosyasında 3 tane özel middleware ekledin (Sırasıyla A, B ve C). Her biri ekrana bir harf yazıyor ve sonra `next()` diyor. En sonda ise Controller var.
+
+Kod şuna benziyor:
+
+C#
+
+```csharp
+// Middleware A
+app.Use(async (context, next) => {
+    Console.Write("A1 ");
+    await next();
+    Console.Write("A2 ");
+});
+
+// Middleware B
+app.Use(async (context, next) => {
+    Console.Write("B1 ");
+    await next();
+    Console.Write("B2 ");
+});
+
+// Middleware C (Terminal - Run kullanmış)
+app.Run(async context => {
+    Console.Write("C ");
+});
+```
+
+Bir istek geldiğinde konsolda hangi çıktı oluşur?
+
+
+
+Buradaki `await next()` komutu aslında şu anlama gelir: **"Burada dur! Senden sonraki herkes işini bitirip geri dönene kadar bekle."**
+
+Olay an be an şöyle gerçekleşir:
+
+1. **GİRİŞ (Request Anı):**
+    
+    - **Middleware A** başlar -> Ekrana **`A1`** yazar.
+        
+    - `next()` çağrılır -> A burada donar bekler, top B'ye geçer.
+        
+    - **Middleware B** başlar -> Ekrana **`B1`** yazar.
+        
+    - `next()` çağrılır -> B burada donar bekler, top C'ye geçer.
+        
+2. **SON DURAK (Terminal):**
+    
+    - **Middleware C** çalışır -> Ekrana **`C`** yazar.
+        
+    - C biter ve geri döner (`return`).
+        
+3. **ÇIKIŞ (Response Anı - Geriye Dönüş):**
+    
+    - Top **Middleware B**'ye, tam donduğu yere (`next`in altına) geri döner.
+        
+    - B devam eder -> Ekrana **`B2`** yazar. B biter.
+        
+    - Top **Middleware A**'ya, tam donduğu yere geri döner.
+        
+    - A devam eder -> Ekrana **`A2`** yazar. A biter.
+        
+
+Sonuç: **A1 -> B1 -> C -> B2 -> A2**
+
+Bu "U Dönüşü" yapısını anlamak, ileride "Exception Handling" (Hata Yakalama) middleware'lerinin neden en dışta olduğunu anlamanı sağlayacak (çünkü hatayı dönüş yolunda yakalarlar).

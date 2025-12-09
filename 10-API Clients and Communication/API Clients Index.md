@@ -2,3 +2,5 @@
 [[1-REST]]
 [[1.1-Gridify]]
 [[2-GraphQL]]
+[[2.1-Hot Chocolate]]
+[[3-gRPC]]

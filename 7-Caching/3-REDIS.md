@@ -44,8 +44,8 @@ Bağlı liste (Linked List) mantığıyla çalışır.
 
 Her elemanın bir "Skoru" vardır. Redis bunları otomatik sıralar.
 
-- **Kullanım:** Oyunlardaki "Leaderboard". "En çok puan alan ilk 10 kişiyi getir" (`ZRANGE 0 9`) komutu mikrosaniyeler sürer. Bunu SQL ile yapmaya çalışırsan (`ORDER BY Score DESC LIMIT 10`) milyonlarca kayıtta sunucu ağlar. Senin **Aion** oyunundaki sıralamalar muhtemelen böyle tutuluyordur.
-    
+- **Kullanım:** Oyunlardaki "Leaderboard". "En çok puan alan ilk 10 kişiyi getir" (`ZRANGE 0 9`) komutu mikrosaniyeler sürer. Bunu SQL ile yapmaya çalışırsan (`ORDER BY Score DESC LIMIT 10`) milyonlarca kayıtta sunucu ağlar. 
+
 
 #### E. Hashes (Sözlükler)
 

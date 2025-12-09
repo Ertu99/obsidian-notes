@@ -1,4 +1,4 @@
-
+ 
 Bu kütüphane, sadece ASP.NET Core'un bir parçası değildir; Konsol uygulamalarından Azure Functions'a kadar her yerde çalışan, bağımsız ve hafif (lightweight) bir Container'dır.
 
 Çoğu geliştirici sadece `builder.Services.AddScoped(...)` yazar geçer. Ama bir **Backend Mühendisi**, bu kütüphanenin yeteneklerini (Open Generics, Factory Pattern) ve sınırlarını (neden bazen Autofac'e ihtiyaç duyduğumuzu) bilmek zorundadır.

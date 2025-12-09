@@ -3,3 +3,4 @@
 [[2-DI Containers]]
 [[3-Microsoft Extensions]]
 [[4-AutoFac]]
+[[5-Scrutor]]

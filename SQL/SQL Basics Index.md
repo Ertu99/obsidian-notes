@@ -7,7 +7,7 @@
 - [[DATABASE NORMALIZATION]]
 - [[Database Relationships]]
 - [[GROUP BY ,HAVING]]
-- [[INDEX]]
+- [[SQL/INDEX]]
 - [[ORDER BY + OFFSET–FETCH]]
 - [[OUTPUT]]
 - [[TRANSACTION]]

@@ -2,3 +2,4 @@
 [[1- Message Broker  = RabbitMQ]]
 [[2-Message Bus = MassTransit]]
 [[3-API GATEWAY]]
+[[4 - Containerization]]

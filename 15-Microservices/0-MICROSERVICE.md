@@ -125,7 +125,6 @@ Neden?
 - Bir servisi başka teknolojiye taşıyabilirsin (Postgres → Mongo gibi)
 - Servisler loosely coupled olur (zayıf bağ)
 
-Biz projede **her servise ayrı Postgres DB** kuracağız.
 
 ---
 
@@ -192,16 +191,9 @@ Payment down ise Order da çaresiz kalıyor → sistem sıkı bağlı oluyor.
 - Order, Payment’ın anında cevap vermesini beklemez
 - Sonuç (başarılı/başarısız) başka bir event olarak gelir
 
-Biz projede:
-
-- İlk olarak REST’i kısa göstereceğiz (dezavantajı anla diye)
-- Sonra RabbitMQ ile **Event-Driven Architecture**’a geçeceğiz
-
-Burası zaten sonraki teorik bölümümüz olacak.
-
 ---
 
-## 0.4 – CAP Teoremi ve Eventual Consistency (Korkutmayacak Özet)
+## 0.4 – CAP Teoremi ve Eventual Consistency 
 
 Microservice = dağıtık sistem.
 
@@ -308,31 +300,7 @@ SAGA, Outbox vs. bu dünyanın tasarım kalıpları.
 - Tek ekip, az kişi
 - Domain henüz oturmamış (ne neyi yapacak belli değil)
 - Complex devops bilgisi yok
-
-**Senin durumun:**
-
-- Gerçek bir şirkette muhtemelen monolit + birkaç mikroservis karışımı göreceksin.
-- Biz ise **öğrenmek için “abartılı ama mülakat için mükemmel” bir mikroservis projesi** yapıyoruz.
-
 ---
-
-## 0.7 – Bizim Projede Bu Teori Ne Anlama Geliyor?
-
-Toparlayalım ve bizim projeye bağlayalım:
-
-- **Bounded Context**
-    - Order, Payment, Inventory, Notification → ayrı domainler, ayrı servisler
-- **Her servis ayrı DB**
-    - OrderDb, PaymentDb, InventoryDb, NotificationDb (PostgreSQL)
-- **Consistency**
-    - Tek transaction yok → SAGA ile idare ediyoruz
-    - Eventual consistency mantığını kabul ediyoruz
-- **İletişim**
-    - Başlangıçta REST kavramını gösterip
-    - Sonra RabbitMQ ile event-driven’a geçiyoruz
-- **Bağımsız deploy / scale**
-    - Docker + (ileride Azure) ile her servisi bağımsız ayakta tutacağız
-
 # 1. Mikroservisler Arası İletişim Neden Problem?
 
 Mikroservis = bağımsız servisler

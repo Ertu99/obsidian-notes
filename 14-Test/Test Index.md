@@ -3,3 +3,6 @@
 [[2- Assertions]]
 [[3-Mocking]]
 [[4-Fake Data Generation]]
+[[5-Integration Testing]]
+[[6-E2E Testing]]
+[[7-Behavior Testing]]

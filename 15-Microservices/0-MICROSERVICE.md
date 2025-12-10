@@ -605,13 +605,13 @@ Yani:
 
 # 🎯 2. SAGA iki farklı yaklaşım içerir:
 
-## 1) **Choreography (Dans eden servisler)**
+## 1) **Choreography **
 
 Yaygın, RabbitMQ ile doğal şekilde yapılır.
 
 Bizim projede öncelik bu.
 
-## 2) **Orchestration (Orkestra şefi var)**
+## 2) **Orchestration 
 
 OrderSaga gibi bir merkez servis tüm adımları yönetir.
 
@@ -788,7 +788,7 @@ Stok kontrol eder:
 
 ---
 
-# 🎉 6. SAGA’nın Efsane Özet Cümlesi (Mülakat İçin)
+# 🎉 6. SAGA’nın Özet Cümlesi (Mülakat İçin)
 
 > "SAGA, mikroservislerde tek transaction yerine, her servisin kendi transaction'ını yapmasını ve adımların bir event zinciri içinde yönetilmesini sağlayan bir pattern’dir. Olumsuz bir durumda önceki adımları geri almak için compensation event’leri kullanılır.”
 

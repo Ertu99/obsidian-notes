@@ -2,25 +2,25 @@
 
 ## 1. Giriş: Monolitikten Mikroservislere Geçiş ve Mesajlaşmanın Rolü
 
-Yazılım geliştirme dünyasında son on yılda yaşanan en büyük paradigma değişimlerinden biri, monolitik mimarilerden dağıtık mikroservis mimarilerine geçiş olmuştur. Bir.NET Core geliştiricisi olarak bu yolculuğa yeni başladığınızda, karşılaşacağınız en temel zorluk "iletişim" olacaktır. Monolitik bir uygulamada, bir sipariş modülü stok modülüyle konuşmak istediğinde, aynı bellek bloğu (memory space) içinde basit bir metod çağrısı yapar. Bu işlem anlıktır, transactional bütünlük (ACID) veritabanı seviyesinde kolayca sağlanır ve ağ gecikmesi gibi bir dert yoktur.1
+Yazılım geliştirme dünyasında son on yılda yaşanan en büyük paradigma değişimlerinden biri, monolitik mimarilerden dağıtık mikroservis mimarilerine geçiş olmuştur. Bir.NET Core geliştiricisi olarak bu yolculuğa yeni başladığınızda, karşılaşacağınız en temel zorluk "iletişim" olacaktır. Monolitik bir uygulamada, bir sipariş modülü stok modülüyle konuşmak istediğinde, aynı bellek bloğu (memory space) içinde basit bir metod çağrısı yapar. Bu işlem anlıktır, transactional bütünlük (ACID) veritabanı seviyesinde kolayca sağlanır ve ağ gecikmesi gibi bir dert yoktur.
 
-Ancak sistemi mikroservislere böldüğünüzde, "Sipariş Servisi" ve "Stok Servisi" artık farklı sunucularda, hatta farklı kıtalarda çalışıyor olabilir. Bu servislerin birbiriyle nasıl konuşacağı sorusu, sistemin başarısını belirleyen en kritik faktördür. İşte bu noktada, senkron (eşzamanlı) ve asenkron (eşzamanlı olmayan) iletişim arasındaki ayrım devreye girer. HTTP üzerinden REST API çağrıları yapmak (senkron iletişim), en yaygın başlangıç noktasıdır. Ancak, bir servis diğerinden yanıt beklerken kilitleniyorsa (blocking), zincirleme hatalar (cascading failures) ve performans darboğazları kaçınılmazdır.2
+Ancak sistemi mikroservislere böldüğünüzde, "Sipariş Servisi" ve "Stok Servisi" artık farklı sunucularda, hatta farklı kıtalarda çalışıyor olabilir. Bu servislerin birbiriyle nasıl konuşacağı sorusu, sistemin başarısını belirleyen en kritik faktördür. İşte bu noktada, senkron (eşzamanlı) ve asenkron (eşzamanlı olmayan) iletişim arasındaki ayrım devreye girer. HTTP üzerinden REST API çağrıları yapmak (senkron iletişim), en yaygın başlangıç noktasıdır. Ancak, bir servis diğerinden yanıt beklerken kilitleniyorsa (blocking), zincirleme hatalar (cascading failures) ve performans darboğazları kaçınılmazdır.
 
 RabbitMQ gibi mesaj kuyruk sistemleri (Message Brokers), bu sorunu çözmek için "Asenkron Mesajlaşma" modelini sunar. RabbitMQ, üretici (Producer) ile tüketici (Consumer) arasına girerek onları hem **zamansal** (temporal) hem de **mekansal** (spatial) olarak birbirinden ayırır (decoupling). Bu rapor, yeni bir işe girmeyi hedefleyen ve.NET Core ile mikroservis dünyasına adım atan bir yazılım mühendisi için, RabbitMQ'nun en temel atomik parçalarından başlayarak, mülakatlarda sorulabilecek en karmaşık senaryolara kadar uzanan kapsamlı bir rehber niteliğindedir.
 
 ### 1.1 Mesaj Broker Nedir ve Neden RabbitMQ?
 
-Mesaj Broker (Aracı), uygulamalar arasında veri alışverişini sağlayan bir ara yazılımdır. RabbitMQ, bu alandaki en olgun, en yaygın ve en güvenilir açık kaynaklı çözümlerden biridir. Erlang dili ile yazılmıştır; Erlang, telekomünikasyon sistemleri için tasarlanmış, yüksek eşzamanlılık (concurrency) ve hata toleransı (fault tolerance) sunan bir platformdur. RabbitMQ'nun bu temeli, onun milyonlarca mesajı düşük gecikme (latency) ile işlemesini sağlar.4
+Mesaj Broker (Aracı), uygulamalar arasında veri alışverişini sağlayan bir ara yazılımdır. RabbitMQ, bu alandaki en olgun, en yaygın ve en güvenilir açık kaynaklı çözümlerden biridir. Erlang dili ile yazılmıştır; Erlang, telekomünikasyon sistemleri için tasarlanmış, yüksek eşzamanlılık (concurrency) ve hata toleransı (fault tolerance) sunan bir platformdur. RabbitMQ'nun bu temeli, onun milyonlarca mesajı düşük gecikme (latency) ile işlemesini sağlar.
 
-RabbitMQ'yu diğerlerinden (örneğin Kafka veya ActiveMQ) ayıran temel özellik, **AMQP 0-9-1 (Advanced Message Queuing Protocol)** standardını uyguluyor olmasıdır. RabbitMQ, "Akıllı Broker, Aptal Tüketici" (Smart Broker, Dumb Consumer) modelini benimser. Yani karmaşık yönlendirme mantığı (routing logic), mesajın hangi kuyruğa gideceği kararı ve mesajın teslim edildiğinin takibi Broker üzerinde yapılır. Bu, Kafka gibi "Akıllı Tüketici" modellerine göre, mikroservisler arasındaki karmaşık iş akışlarını yönetmeyi çok daha kolay hale getirir.2
+RabbitMQ'yu diğerlerinden (örneğin Kafka veya ActiveMQ) ayıran temel özellik, **AMQP 0-9-1 (Advanced Message Queuing Protocol)** standardını uyguluyor olmasıdır. RabbitMQ, "Akıllı Broker, Aptal Tüketici" (Smart Broker, Dumb Consumer) modelini benimser. Yani karmaşık yönlendirme mantığı (routing logic), mesajın hangi kuyruğa gideceği kararı ve mesajın teslim edildiğinin takibi Broker üzerinde yapılır. Bu, Kafka gibi "Akıllı Tüketici" modellerine göre, mikroservisler arasındaki karmaşık iş akışlarını yönetmeyi çok daha kolay hale getirir.
 
-Bir iş görüşmesinde "Neden RabbitMQ?" sorusuyla karşılaştığınızda vereceğiniz en güçlü cevap şudur: "RabbitMQ, karmaşık yönlendirme senaryolarını (routing), mesaj teslim garantilerini (reliability) ve servisler arası gevşek bağlılığı (loose coupling) standart bir protokol olan AMQP üzerinden en esnek şekilde sağlayan çözümdür.".2
+Bir iş görüşmesinde "Neden RabbitMQ?" sorusuyla karşılaştığınızda vereceğiniz en güçlü cevap şudur: "RabbitMQ, karmaşık yönlendirme senaryolarını (routing), mesaj teslim garantilerini (reliability) ve servisler arası gevşek bağlılığı (loose coupling) standart bir protokol olan AMQP üzerinden en esnek şekilde sağlayan çözümdür.".
 
 ---
 
 ## 2. AMQP 0-9-1 Protokolü ve Temel Kavramlar
 
-RabbitMQ'yu anlamak, aslında AMQP 0-9-1 protokolünü anlamaktır. Bu protokol, sadece veri paketlerinin nasıl gönderileceğini değil, mesajlaşma sisteminin mimarisini de tanımlar. AMQP "Programlanabilir" bir protokoldür; yani kuyruklar, borsalar (exchanges) ve bağlamalar (bindings) gibi varlıklar, yönetici tarafından statik olarak tanımlanmak zorunda değildir; uygulamanız bu varlıkları kod (C#) üzerinden dinamik olarak oluşturabilir, değiştirebilir ve silebilir.5
+RabbitMQ'yu anlamak, aslında AMQP 0-9-1 protokolünü anlamaktır. Bu protokol, sadece veri paketlerinin nasıl gönderileceğini değil, mesajlaşma sisteminin mimarisini de tanımlar. AMQP "Programlanabilir" bir protokoldür; yani kuyruklar, borsalar (exchanges) ve bağlamalar (bindings) gibi varlıklar, yönetici tarafından statik olarak tanımlanmak zorunda değildir; uygulamanız bu varlıkları kod (C#) üzerinden dinamik olarak oluşturabilir, değiştirebilir ve silebilir.
 
 ### 2.1 Bağlantı (Connection) ve Kanal (Channel) Mimarisi
 
@@ -28,7 +28,7 @@ Yeni başlayanların ve hatta deneyimli geliştiricilerin en sık hata yaptığ�
 
 #### Connection (TCP Bağlantısı)
 
-RabbitMQ ile uygulamanız arasındaki fiziksel yoldur. Alt seviyede bir TCP bağlantısıdır. Bir TCP bağlantısı kurmak maliyetli bir iştir; "Three-way handshake" (üçlü el sıkışma), kimlik doğrulama (authentication) ve SSL/TLS el sıkışması gibi süreçleri içerir. İşletim sistemi seviyesinde de her TCP bağlantısı bir dosya tanımlayıcısı (file descriptor) tüketir. Mikroservis mimarisinde, saniyede binlerce mesaj işleyen yüzlerce thread (iş parçacığı) olabilir. Her işlem için yeni bir TCP bağlantısı açıp kapatmak, hem istemci makineyi hem de RabbitMQ sunucusunu "TCP Connection Churn" denilen duruma sokar ve sistemi kilitler.6
+RabbitMQ ile uygulamanız arasındaki fiziksel yoldur. Alt seviyede bir TCP bağlantısıdır. Bir TCP bağlantısı kurmak maliyetli bir iştir; "Three-way handshake" (üçlü el sıkışma), kimlik doğrulama (authentication) ve SSL/TLS el sıkışması gibi süreçleri içerir. İşletim sistemi seviyesinde de her TCP bağlantısı bir dosya tanımlayıcısı (file descriptor) tüketir. Mikroservis mimarisinde, saniyede binlerce mesaj işleyen yüzlerce thread (iş parçacığı) olabilir. Her işlem için yeni bir TCP bağlantısı açıp kapatmak, hem istemci makineyi hem de RabbitMQ sunucusunu "TCP Connection Churn" denilen duruma sokar ve sistemi kilitler.
 
 #### Channel (Sanal Bağlantı)
 
@@ -41,7 +41,7 @@ Bu sorunu çözmek için AMQP, "Channel" kavramını getirmiştir. Kanal, tek bi
 |**Kullanım**|Uygulama ömrü boyunca 1 tane (Singleton)|İşlem başına veya Thread başına|
 |**Thread Safety**|Thread-safe (Genellikle)|**Thread-safe DEĞİLDİR**|
 
-**Kritik Uyarı:**.NET `RabbitMQ.Client` kütüphanesinde `IModel` (Channel) nesnesi thread-safe değildir. Asla aynı kanal nesnesini birden fazla thread arasında paylaştırmayın. Bu, paketlerin birbirine karışmasına ve protokol hatalarına neden olur. Doğru yöntem, `IConnection` nesnesini Singleton olarak tutmak, ancak her thread veya işlem için o bağlantıdan yeni bir kanal (`CreateModel`) türetmektir.6
+**Kritik Uyarı:**.NET `RabbitMQ.Client` kütüphanesinde `IModel` (Channel) nesnesi thread-safe değildir. Asla aynı kanal nesnesini birden fazla thread arasında paylaştırmayın. Bu, paketlerin birbirine karışmasına ve protokol hatalarına neden olur. Doğru yöntem, `IConnection` nesnesini Singleton olarak tutmak, ancak her thread veya işlem için o bağlantıdan yeni bir kanal (`CreateModel`) türetmektir.
 
 ---
 
@@ -49,11 +49,11 @@ Bu sorunu çözmek için AMQP, "Channel" kavramını getirmiştir. Kanal, tek bi
 
 RabbitMQ'nun çalışma mantığını bir "Postane" analojisi ile zihninize kazıyabilirsiniz. Bir mektubu (Mesaj) posta kutusuna attığınızda, mektubun tam olarak hangi mahalledeki hangi eve (Kuyruk) gideceğini bilmezsiniz. Sadece zarfın üzerine bir adres (Routing Key) yazarsınız. Posta dağıtım merkezi (Exchange), bu adrese bakarak mektubu doğru posta kutusuna (Queue) yönlendirir.
 
-RabbitMQ'da üretici (Producer) **ASLA** doğrudan bir kuyruğa mesaj göndermez. Mesajı her zaman bir Exchange'e gönderir. Bu kural, RabbitMQ'nun esnekliğinin temelidir.1
+RabbitMQ'da üretici (Producer) **ASLA** doğrudan bir kuyruğa mesaj göndermez. Mesajı her zaman bir Exchange'e gönderir. Bu kural, RabbitMQ'nun esnekliğinin temelidir.
 
 ### 3.1 Exchange (Borsa/Dağıtıcı)
 
-Exchange, mesajları üreticiden alır ve bunları belirli kurallara (Bindings) göre kuyruklara yönlendirir. Exchange bir depolama alanı değildir; sadece bir yönlendiricidir. Eğer bir mesaj bir Exchange'e gelir ve gideceği hiçbir kuyruk bulunamazsa, mesaj (konfigürasyona bağlı olarak) ya silinir ya da üreticiye geri iade edilir.11
+Exchange, mesajları üreticiden alır ve bunları belirli kurallara (Bindings) göre kuyruklara yönlendirir. Exchange bir depolama alanı değildir; sadece bir yönlendiricidir. Eğer bir mesaj bir Exchange'e gelir ve gideceği hiçbir kuyruk bulunamazsa, mesaj (konfigürasyona bağlı olarak) ya silinir ya da üreticiye geri iade edilir.
 
 Mülakatlarda karşınıza çıkacak en önemli soru: **"Exchange tipleri nelerdir ve aralarındaki farklar nedir?"**
 
@@ -63,9 +63,9 @@ En basit ve hedef odaklı yönlendirme tipidir. Mesajın üzerindeki `Routing Ke
 
 - **Senaryo:** Bir loglama sisteminiz var. `error` loglarını diskteki dosyaya yazmak istiyorsunuz. `info` loglarını ise sadece ekrana yazdırmak istiyorsunuz.
     
-- **İşleyiş:** Üretici, mesajı `log_exchange` isimli direct exchange'e, `error` routing key'i ile gönderir. Bu exchange, `error` anahtarı ile kendine bağlanmış olan `DiskQueue` kuyruğuna mesajı iletir. `info` anahtarı ile gelen mesaj ise `DiskQueue`'ya gitmez.10
+- **İşleyiş:** Üretici, mesajı `log_exchange` isimli direct exchange'e, `error` routing key'i ile gönderir. Bu exchange, `error` anahtarı ile kendine bağlanmış olan `DiskQueue` kuyruğuna mesajı iletir. `info` anahtarı ile gelen mesaj ise `DiskQueue`'ya gitmez.
     
-- **Default Exchange:** RabbitMQ'da her kuyruk, oluşturulduğu anda otomatik olarak "isimsiz" (empty string) bir Direct Exchange'e kendi ismiyle bağlanır. Bu sayede basitçe "Şu isimli kuyruğa gönder" dediğinizde aslında arka planda bu mekanizma çalışır.11
+- **Default Exchange:** RabbitMQ'da her kuyruk, oluşturulduğu anda otomatik olarak "isimsiz" (empty string) bir Direct Exchange'e kendi ismiyle bağlanır. Bu sayede basitçe "Şu isimli kuyruğa gönder" dediğinizde aslında arka planda bu mekanizma çalışır.
     
 
 #### 2. Fanout Exchange (Yelpaze/Yayın Yönlendirme)
@@ -74,7 +74,7 @@ Bu tip, routing key'i tamamen görmezden gelir. Kendisine bağlı olan **tüm** 
 
 - **Senaryo (Pub/Sub):** Bir e-ticaret sitesinde yeni bir ürün eklendiğinde (`ProductCreated` olayı), hem "Arama Servisi"nin (Elasticsearch) indeksini güncellemesi, hem de "Mobil Bildirim Servisi"nin kullanıcılara bildirim atması gerekir.
     
-- **İşleyiş:** Üretici mesajı `products_fanout` exchange'ine atar. Bu exchange'e bağlı `SearchQueue` ve `NotificationQueue` kuyruklarının ikisi de mesajı alır. Servisler birbirinden habersiz çalışır. Bu, mikroservislerdeki "gevşek bağlılık" (loose coupling) ilkesinin en güzel örneğidir.13
+- **İşleyiş:** Üretici mesajı `products_fanout` exchange'ine atar. Bu exchange'e bağlı `SearchQueue` ve `NotificationQueue` kuyruklarının ikisi de mesajı alır. Servisler birbirinden habersiz çalışır. Bu, mikroservislerdeki "gevşek bağlılık" (loose coupling) ilkesinin en güzel örneğidir.
     
 
 #### 3. Topic Exchange (Konu Tabanlı Yönlendirme)
@@ -89,12 +89,12 @@ En esnek ve güçlü yönlendirme tipidir. Routing key'ler genellikle nokta ile 
     
     - `stock.#` -> `stock` ile başlayan her şeyle eşleşir.
         
-- **Senaryo:** Bir haber ajansı sisteminde, spor haberlerini, teknoloji haberlerini ve tüm "son dakika" (breaking) haberlerini ayrı ayrı filtrelemek istiyorsunuz. `news.sports.football`, `news.tech.ai`, `news.breaking.politics` gibi anahtarlar kullanabilirsiniz. Bir tüketici sadece `news.breaking.#` diyerek tüm son dakika haberlerini alabilir.4
+- **Senaryo:** Bir haber ajansı sisteminde, spor haberlerini, teknoloji haberlerini ve tüm "son dakika" (breaking) haberlerini ayrı ayrı filtrelemek istiyorsunuz. `news.sports.football`, `news.tech.ai`, `news.breaking.politics` gibi anahtarlar kullanabilirsiniz. Bir tüketici sadece `news.breaking.#` diyerek tüm son dakika haberlerini alabilir.
     
 
 #### 4. Headers Exchange
 
-Routing key yerine, mesajın başlık (header) özelliklerine bakar. `x-match` argümanı ile `any` (herhangi biri eşleşirse) veya `all` (hepsi eşleşmeli) mantığı kurulabilir. Performansı Topic ve Direct exchange'lere göre daha düşüktür ve daha az kullanılır.4
+Routing key yerine, mesajın başlık (header) özelliklerine bakar. `x-match` argümanı ile `any` (herhangi biri eşleşirse) veya `all` (hepsi eşleşmeli) mantığı kurulabilir. Performansı Topic ve Direct exchange'lere göre daha düşüktür ve daha az kullanılır.
 
 ### 3.2 Queues (Kuyruklar)
 
@@ -106,12 +106,12 @@ Kuyruklar mesajların tüketici tarafından işlenene kadar saklandığı tampon
     
 - **Auto-Delete:** Son tüketici (consumer) bağlantısını kestiğinde kuyruk otomatik olarak silinir.
     
-- **Exclusive:** Sadece kuyruğu oluşturan bağlantı (connection) tarafından kullanılabilir ve bağlantı kapandığında silinir. Genellikle RPC senaryolarında geçici yanıt kuyrukları için kullanılır.5
+- **Exclusive:** Sadece kuyruğu oluşturan bağlantı (connection) tarafından kullanılabilir ve bağlantı kapandığında silinir. Genellikle RPC senaryolarında geçici yanıt kuyrukları için kullanılır.
     
 
 ### 3.3 Bindings (Bağlamalar)
 
-Exchange ile Queue arasındaki kuraldır. "Bu Exchange'e gelen, şu Routing Key'e sahip mesajları, bu Kuyruğa ilet" talimatıdır. Yönlendirme mantığının kalbi burasıdır.4
+Exchange ile Queue arasındaki kuraldır. "Bu Exchange'e gelen, şu Routing Key'e sahip mesajları, bu Kuyruğa ilet" talimatıdır. Yönlendirme mantığının kalbi burasıdır.
 
 ---
 
@@ -155,7 +155,7 @@ Teoriyi öğrendik, şimdi.NET Core dünyasına inelim. Projenizde `RabbitMQ.Cli
 
 C#
 
-```
+```cs
 // IRabbitMqConnection.cs
 public interface IRabbitMqConnection
 {
@@ -180,7 +180,7 @@ public class RabbitMqConnection : IRabbitMqConnection, IDisposable
 }
 ```
 
-Bu servisi `Startup.cs` veya `Program.cs` içinde `services.AddSingleton<IRabbitMqConnection, RabbitMqConnection>();` olarak eklemelisiniz.25
+Bu servisi `Startup.cs` veya `Program.cs` içinde `services.AddSingleton<IRabbitMqConnection, RabbitMqConnection>();` olarak eklemelisiniz.
 
 ### 5.2 Producer (Üretici) Kodlama
 
@@ -188,7 +188,7 @@ Bu servisi `Startup.cs` veya `Program.cs` içinde `services.AddSingleton<IRabbit
 
 C#
 
-```
+```cs
 public void SendMessage(string message)
 {
     // Bağlantıyı Singleton servisten alıyoruz
@@ -208,7 +208,7 @@ public void SendMessage(string message)
 }
 ```
 
-.27
+
 
 ### 5.3 Consumer (Tüketici) ve BackgroundService
 
@@ -216,7 +216,7 @@ Tüketiciler genellikle kullanıcı isteğinden bağımsız, arka planda sürekl
 
 C#
 
-```
+```cs
 public class OrderProcessingWorker : BackgroundService
 {
     private IModel _channel;
@@ -302,7 +302,7 @@ Bu ayarın çalışabilmesi için **AutoAck** (Otomatik Onay) özelliğinin **ka
 
 C#
 
-```
+```cs
 var factory = new ConnectionFactory() { HostName = "localhost" };
 using (var connection = factory.CreateConnection())
 using (var channel = connection.CreateModel())
@@ -378,7 +378,7 @@ Deneyimli bir aday olarak öne çıkmanızı sağlayacak konular buradadır.
 
 Bir mesaj, tüketicinin kodundaki bir bug veya verideki bir bozukluk nedeniyle işlenemiyorsa ne olur? Eğer requeue=true ile sürekli reddederseniz, mesaj sonsuz bir döngüye girer (RabbitMQ -> Consumer -> Hata -> RabbitMQ). Bu mesajlara "Zehirli Mesaj" (Poison Message) denir.
 
-Çözüm: Kuyruğu tanımlarken bir DLX (Ölü Mektup Borsası) belirtmektir. Hata alan veya süresi dolan (TTL) mesajlar otomatik olarak bu Exchange'e, oradan da bir "Hata Kuyruğu"na yönlendirilir. Geliştiriciler daha sonra bu kuyruğu inceleyerek hatanın nedenini anlar.31
+Çözüm: Kuyruğu tanımlarken bir DLX (Ölü Mektup Borsası) belirtmektir. Hata alan veya süresi dolan (TTL) mesajlar otomatik olarak bu Exchange'e, oradan da bir "Hata Kuyruğu"na yönlendirilir. Geliştiriciler daha sonra bu kuyruğu inceleyerek hatanın nedenini anlar.
 
 ### 6.2 RPC (Remote Procedure Call)
 
@@ -390,14 +390,14 @@ RabbitMQ asenkrondur ama bazen bir servisin diğerinden cevaba ihtiyacı olur. R
     
 3. İstemci, cevap kuyruğunu dinler ve ID eşleşmesi yaparak cevabı alır.
     
-    Bu yapı, request/response mimarisini mesajlaşma üzerinden simüle eder.34
+    Bu yapı, request/response mimarisini mesajlaşma üzerinden simüle eder.
     
 
 ### 6.3 Kümeleme (Clustering) ve Quorum Queues
 
 Tek bir RabbitMQ sunucusu (Node) çökerse sistem durur. Prod ortamında mutlaka Cluster (Küme) kurulmalıdır.
 
-Eskiden "Mirrored Queues" (Aynalanmış Kuyruklar) kullanılırdı ama artık Quorum Queues standarttır. Raft konsensüs algoritmasını kullanan Quorum kuyruklar, verinin birden fazla sunucuda tutarlı bir şekilde saklanmasını sağlar ve ağ bölünmelerine (network partitions) karşı çok daha dirençlidir.33
+Eskiden "Mirrored Queues" (Aynalanmış Kuyruklar) kullanılırdı ama artık Quorum Queues standarttır. Raft konsensüs algoritmasını kullanan Quorum kuyruklar, verinin birden fazla sunucuda tutarlı bir şekilde saklanmasını sağlar ve ağ bölünmelerine (network partitions) karşı çok daha dirençlidir.
 
 ---
 
@@ -409,12 +409,12 @@ MassTransit,.NET için geliştirilmiş, RabbitMQ'nun üzerine oturan bir soyutla
 
 - **Kolaylık:** `ExchangeDeclare`, `QueueBind` gibi topoloji tanımlarını sizin yerinize otomatik yapar.
     
-- **Resilience (Direnç):** İçinde gömülü Retry (Tekrar deneme), Circuit Breaker (Devre kesici) patternleri ile gelir. Örneğin "Hata alırsan 3 kere dene, her denemede 5 saniye bekle" gibi kuralları tek satırla eklersiniz.36
+- **Resilience (Direnç):** İçinde gömülü Retry (Tekrar deneme), Circuit Breaker (Devre kesici) patternleri ile gelir. Örneğin "Hata alırsan 3 kere dene, her denemede 5 saniye bekle" gibi kuralları tek satırla eklersiniz.
     
-- **Sagas (State Machines):** Dağıtık sistemlerde "Transaction" yönetimi zordur. MassTransit, uzun süreli iş akışlarını (Saga) yönetmek için harika bir State Machine desteği sunar.37
+- **Sagas (State Machines):** Dağıtık sistemlerde "Transaction" yönetimi zordur. MassTransit, uzun süreli iş akışlarını (Saga) yönetmek için harika bir State Machine desteği sunar.
     
 
-**Mülakat İpucu:** "Native client mı MassTransit mi?" sorusuna, "Basit, tek yönlü işler ve maksimum performans/kontrol gerektiren durumlar için Native Client; ancak kurumsal, karmaşık iş akışları, hata yönetimi ve Sagas gerektiren mikroservis mimarileri için MassTransit kullanırım çünkü tekerleği yeniden icat etmeyi engeller ve geliştirme hızını artırır" şeklinde cevap verin.37
+**Mülakat İpucu:** "Native client mı MassTransit mi?" sorusuna, "Basit, tek yönlü işler ve maksimum performans/kontrol gerektiren durumlar için Native Client; ancak kurumsal, karmaşık iş akışları, hata yönetimi ve Sagas gerektiren mikroservis mimarileri için MassTransit kullanırım çünkü tekerleği yeniden icat etmeyi engeller ve geliştirme hızını artırır" şeklinde cevap verin.
 
 ---
 
@@ -430,7 +430,6 @@ Yeni işinizde sistemi canlıya almadan önce şunları kontrol etmelisiniz:
 |**Dosya Tanımlayıcılar**|OS seviyesinde `ulimit -n` değerini artırın (örn: 65536).|Çok fazla bağlantı açıldığında sistem hata vermesin.|
 |**VHost**|Farklı uygulamalar için farklı Virtual Host'lar kullanın.|İzolasyon ve güvenlik sağlar.|
 
-.39
 
 ---
 

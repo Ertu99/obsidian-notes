@@ -138,3 +138,17 @@ Cache'in içinde sakladığın nesne (List<Product>) Thread-Safe olmayabilir!
 
 ---
 
+### 1. In-Memory Caching (`IMemoryCache`)
+
+**🧒 6 Yaşındaki Çocuğa (Kalem Kutusu Analojisi):** "Okulda resim yaparken boya kalemlerinin nerede olduğu çok önemlidir. Eğer kalemlerin **sıranın üzerindeki kalem kutusundaysa (In-Memory Cache)**, elini uzatıp saniyesinde alabilirsin. Çok hızlıdır! Ama bunun iki kötü yanı var:
+
+1. Eğer öğretmen seni **başka bir sınıfa gönderirse (Load Balancer/Sticky Session Sorunu)**, kalem kutun eski sınıfında kalır. Yeni sınıfta boyaların yoktur, resim yapamazsın.
+    
+2. Okul bitip eve gittiğinde hademe gelir ve sıraların üzerindeki her şeyi çöpe atar **(App Restart)**. Ertesi gün kalemlerin orada olmaz. O yüzden kalem kutusuna sadece o an çok lazım olan ve kaybolsa da üzülmeyeceğin eşyaları koymalısın."
+    
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction):** "In-Memory Caching, veriyi uygulamanın çalıştığı sunucunun RAM'inde (`IMemoryCache`) sakladığımız, ağ trafiği olmadığı için **en düşük gecikme süresine (Lowest Latency)** sahip yöntemdir. Ancak bu yöntemi seçerken mimari olarak iki kritik riski yönetmemiz gerekir:
+
+1. **Scalability (Ölçeklenebilirlik):** Uygulama birden fazla sunucuda çalışıyorsa (Web Farm), her sunucunun belleği ayrıdır. Veri tutarsızlığı yaşamamak için ya yük dengeleyicide **Sticky Sessions** açarız ya da bu veriyi referans (Read-Only) verilerle sınırlarız. Aksi halde Distributed Cache (Redis) tercih ederim.
+    
+2. **Resource Management (Kaynak Yönetimi):** RAM sınırlı bir kaynaktır. Uygulamanın **Out Of Memory** hatasıyla çökmemesi için, Cache'e eklenen her veriye mutlaka bir ömür (**Expiration Policy**) biçerim ve gerektiğinde `SizeLimit` ile belleğin dolmasını engellerim."

@@ -130,3 +130,14 @@ host.ConfigureContainer<ContainerBuilder>(builder =>
 Bunu yaptığında, Microsoft'un kendi Container'ı devre dışı kalır, direksiyona Autofac geçer.
 
 ---
+### 1. Autofac (Advanced DI Container)
+
+**🧒 6 Yaşındaki Çocuğa (Oyuncak Toplayan Robot Analojisi):** "Odanı toplamak için bir robotun olduğunu düşün (Microsoft DI). Bu robot biraz saf. Ona her bir oyuncağı tek tek söylemen gerekiyor: 'Mavi legoyu kutuya koy', 'Kırmızı arabayı rafa koy'. Eğer 1000 tane oyuncağın varsa, 1000 kere emir vermen gerekir, çok yorulursun. **Autofac**, bu robotun 'Süper Zeka' versiyonudur. Ona tek tek söylemene gerek yok. Sadece 'Yerdeki her şeyi topla!' (**Assembly Scanning**) dersin, o hepsini halleder. Ayrıca bu süper robotun özel bir yeteneği daha var: Sen ona 'Oyuncakları kutuya koyarken hepsini öp' dersen (**Interceptors/AOP**), senin hiçbir şey yapmana gerek kalmadan her oyuncağı kutuya koymadan önce otomatik olarak öper."
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction):** "Microsoft'un yerleşik DI Container'ı (built-in container) çoğu proje için yeterli olsa da, **Enterprise (Kurumsal)** seviyedeki projelerde yetenekleri sınırlı kalmaktadır. Autofac'i tercih etmemin üç temel mimari sebebi var:
+
+1. **Assembly Scanning:** Yüzlerce servisi tek tek `services.AddScoped` ile eklemek yerine, kurallara dayalı (Convention-based) otomatik kayıt yaparak `Program.cs` dosyasını temiz tutarız ve geliştirme hatasını (servis eklemeyi unutma gibi) engelleriz.
+    
+2. **Aspect-Oriented Programming (AOP):** Autofac'in **Interceptor** yeteneği sayesinde; Loglama, Transaction Yönetimi ve Caching gibi 'Cross-Cutting Concern'leri iş kodunun içine bulaştırmadan (business logic), metodun çalışma anında araya girerek merkezi olarak yönetebiliriz.
+    
+3. **Modüler Yapı:** Bağımlılıkları tek bir dosyada değil, katman bazlı **Modüller** (Module-based Registration) halinde organize ederek, Clean Architecture prensiplerine daha sadık kalırız."

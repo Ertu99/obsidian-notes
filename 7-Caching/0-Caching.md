@@ -102,3 +102,12 @@ Roadmap'in alt başlıklarında bunları detaylı göreceğiz ama şimdiden fark
 
 ---
 
+### 1. Caching (Önbellekleme)
+
+**🧒 6 Yaşındaki Çocuğa (Kütüphane vs Çalışma Masası Analojisi):** "Ödev yapmak için bir ansiklopediye ihtiyacın olduğunu düşün. Ansiklopedi, şehrin öbür ucundaki büyük kütüphanede (**Veritabanı/Disk**) duruyor. Her bilgi lazım olduğunda otobüse binip kütüphaneye gidip gelirsen (**Network/Latency**), ödevin günlerce bitmez. Bunun yerine ne yaparsın? İlk gidişinde o kitabı alıp evine getirir ve çalışma masanın üzerine (**Cache/RAM**) koyarsın. Artık bilgi lazım olduğunda elini uzatman yeterli (**Cache Hit**), saniyesinde bakarsın. Ama masan küçük, bütün kütüphaneyi oraya sığdıramazsın. Sadece _en çok lazım olanları_ koyabilirsin. Bir de dikkat etmelisin; kütüphanedeki kitap güncellendiyse, senin masandaki kitap eski kalabilir (**Stale Data**). Arada bir gidip değiştirmelisin (**Invalidation**)."
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction):** "Caching, uygulama performansını artırmak için **bellek maliyetini artırıp erişim süresini (Latency) azalttığımız** bir mimari optimizasyondur. Veriye erişim hiyerarşisinde Disk I/O ve Network maliyetli işlemlerdir. Bu yüzden sık erişilen ve az değişen verileri, veritabanından çekmek yerine çok daha hızlı olan RAM (Bellek) üzerinde tutarız. Projelerimde Caching stratejilerini kurgularken iki temel zorluğu yönetirim:
+
+1. **Cache Invalidation (Geçersiz Kılma):** Kullanıcıya bayat veri (Stale Data) göstermemek için, veritabanında bir güncelleme olduğunda Cache'i de temizleyen (Event-Based Invalidation) veya belirli bir süre sonra kendini imha eden (TTL - Time to Live) yapılar kurarım.
+    
+2. **Distributed Caching:** Uygulamam birden fazla sunucuda (Microservices/Load Balancer) çalışıyorsa, In-Memory yerine **Redis** gibi dağıtık bir yapı kullanarak veri tutarlılığını (Consistency) sağlarım."

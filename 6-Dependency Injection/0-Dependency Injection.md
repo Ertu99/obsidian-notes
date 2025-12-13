@@ -135,3 +135,12 @@ Yukarıdaki örnekte `SiparisService` (Yüksek), `EmailSender` (Düşük) sını
 
 ---
 
+### 1. Dependency Injection (DI) & IoC
+
+**🧒 6 Yaşındaki Çocuğa (Oyun Konsolu Analojisi):** "Eski el atarilerini hatırlar mısın? İçinde sadece bir tane oyun yüklüydü (Tetris). O oyundan sıkılınca atariyi komple atman gerekiyordu. Çünkü oyun, cihaza yapışıktı (**Tight Coupling**). Ama senin Nintendo Switch'in öyle değil. Switch'in arkasında bir yuva var (**Interface**). Sen o yuvaya Mario kasedi takarsan Mario oynarsın, Zelda takarsan Zelda oynarsın. Switch, hangi oyunu oynadığını bilmez, sadece 'Oyun Kasedi' (**Abstraction**) ile çalışacağını bilir. Kasedi cihaza sen takarsın (**Injection**), cihaz kendi kendine oyun üretmez. İşte bu sayede cihazın bozulmadan yıllarca farklı oyunlar oynayabilirsin."
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction):** "Dependency Injection, yazılım mimarisinde bileşenler arasındaki bağımlılığı yönetmek ve **Gevşek Bağlılık (Loose Coupling)** sağlamak için uyguladığımız temel bir tasarım desenidir. **Inversion of Control (IoC)** prensibini hayata geçirir. Yani, bir sınıfın ihtiyaç duyduğu nesneleri (`new` anahtar kelimesiyle) kendisinin oluşturmasını yasaklarız. Bunun yerine, bu nesneleri ona dışarıdan (Constructor üzerinden) veririz. Bu yaklaşım bize iki kritik avantaj sağlar:
+
+1. **Test Edilebilirlik (Testability):** Bir servisi test ederken, veritabanına giden gerçek bağımlılık yerine sahte (Mock) bir nesne vererek, iş mantığını izole bir şekilde test edebiliriz.
+    
+2. **Esneklik (Flexibility):** Bağımlılıkları somut sınıflar yerine arayüzler (Interfaces) üzerinden yönettiğimiz için, alt yapıdaki bir teknolojiyi (örn: Email yerine SMS) değiştirmek istediğimizde, ana iş koduna dokunmadan sadece Konfigürasyonu (DI Container) güncelleriz."

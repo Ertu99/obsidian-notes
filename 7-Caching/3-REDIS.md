@@ -128,3 +128,12 @@ Metinde "message broker" olarak da geçtiği gibi, Redis basit bir haberleşme s
     
 
 ---
+### 1. Distributed Caching (Redis)
+
+**🧒 6 Yaşındaki Çocuğa (Sınıf Tahtası Analojisi):** "Hatırlıyor musun, az önce boya kalemlerin sıranın üzerindeydi (In-Memory). Ama şimdi sınıf çok kalabalıklaştı ve öğretmen seni sürekli başka sıralara oturtuyor (Load Balancer). Kalemlerini sürekli yanında taşıyamazsın. Bunun yerine sınıfın ortasına kocaman bir **Ortak Dolap (Redis)** koyuyoruz. Herkes kalemini o dolaba koyuyor. Hangi sırada oturursan otur, kalemin lazım olduğunda koşup dolaptan alıyorsun. Ama küçük bir sorun var: Dolaba kalemi öylece fırlatamazsın. Onu güzelce kutusuna koyup, kilitleyip öyle yerleştirmelisin (**Serialization**). Kullanacağın zaman da kutuyu açmalısın (**Deserialization**). Bu kutulama işi biraz vaktini alır ama en azından kalemlerin her zaman güvendedir ve tüm arkadaşların aynı dolabı kullanabilir."
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction):** "Distributed Cache, özellikle **Mikroservis** ve **Container (Docker/Kubernetes)** mimarilerinde veri tutarlılığını (Data Consistency) sağlamak için kullandığımız, uygulamadan bağımsız çalışan merkezi bir önbellek yapısıdır. Uygulamamız yatayda ölçeklendiğinde (Horizontal Scaling), sunucuların birbiriyle senkronize olması için In-Memory yerine **Redis** gibi harici bir çözüm zorunludur. Ancak bir Mimar olarak burada şu maliyetin farkındayım:
+
+1. **Network Latency:** Veriye erişim, In-Memory gibi nanosaniyelerle değil, ağ üzerinden olduğu için milisaniyelerle ölçülür.
+    
+2. **Serialization Overhead:** Veriyi Redis'e yazarken Binary/JSON formatına çevirmek (Serialize) ve okurken geri çevirmek (Deserialize) ciddi bir CPU maliyeti yaratır. Bu yüzden Distributed Cache kullanırken nesne boyutlarını optimize etmeye ve gereksiz trafikten kaçınmaya özen gösteririm."

@@ -138,3 +138,20 @@ public class ProductsController : ControllerBase
 
 ---
 
+### 1. REST API & RESTful Architecture
+
+**🧒 6 Yaşındaki Çocuğa (Otomat Makinesi Analojisi):** "REST API'yi, AVM'lerdeki yiyecek otomatlarına benzetebiliriz. Bu makinenin kuralları çok nettir ve dünyanın her yerinde aynıdır (Uniform Interface):
+
+- İçindekileri görmek için camdan bakarsın (**GET**). Bunu 100 kere de yapsan makinedeki ürünler eksilmez (**Safe & Idempotent**).
+    
+- Para atıp bir çikolata istersen, makine sana yeni bir ürün verir (**POST**).
+    
+- Eğer makineden uzaklaşıp 5 dakika sonra geri gelirsen, makine seni tanımaz. 'Az önce gelen çocuksun, paranı biliyorum' demez. Paranı tekrar atman gerekir. İşte buna **Stateless (Durumsuzluk)** denir. Makine hafızasında seni tutmaz, her işlem yeni bir başlangıçtır."
+    
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction):** "REST, dağıtık sistemlerin birbiriyle iletişim kurması için Roy Fielding tarafından belirlenmiş, internetin ölçeklenebilirliğini temel alan bir **Mimari Stildir (Architectural Style)**. Bizim için iki kritik avantajı vardır:
+
+1. **Stateless (Durumsuz) Yapı:** Sunucu, istemcinin (Client) o anki durumunu (oturum bilgisini) RAM'de tutmaz. Her istek, kimlik bilgisi dahil ihtiyacı olan her şeyi paketin içinde taşır. Bu sayede sunucularımızı çok kolay bir şekilde yatayda ölçekleyebiliriz (Horizontal Scaling). Bir sunucu çökerse, diğer sunucu isteği karşılayabilir çünkü hafızasında kullanıcıya özel bir veri yoktur.
+    
+2. **Standartlaşma (Uniform Interface):** HTTP metotlarını (GET, POST, PUT, DELETE) evrensel standartlarda kullandığımız için, Frontend ve Mobil ekipleriyle entegrasyon maliyetimiz minimuma iner. Dokümantasyon ihtiyacı azalır."
+

@@ -168,3 +168,10 @@ Gördüğün gibi, C# tarafında her şey bu protokole göre dizayn edilmiştir.
 
 ---
 
+**🧒 6 Yaşındaki Çocuğa:** "Sınıfta arkadaşına bir not göndermek istediğini düşün. Eğer notu kağıda yazıp, katlamadan elden ele gönderirsen, yoldaki diğer çocuklar (Ali, Ayşe) kağıdı okuyabilir. İşte bu **HTTP**'dir. Hızlıdır ama sırrını herkes görebilir. Ama eğer notu yazıp kilitli bir kutuya koyarsan ve anahtar sadece arkadaşında varsa, yoldaki kimse kutunun içinde ne olduğunu göremez. Sadece kutuyu taşır. İşte bu da **HTTPS**'tir. İnternette şifrelerimizi ve özel bilgilerimizi gönderirken, kötü adamlar okuyamasın diye hep o kilitli kutuyu (HTTPS) kullanırız."
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction):** "HTTP, uygulamamızın dünyayla iletişim kurmasını sağlayan **evrensel dildir (Application Layer Protocol)**. İstemci (Client) ve Sunucu (Server) arasındaki veri alışverişini standart bir formatta (Request/Response) yönetir. Bir Mimar olarak HTTP'de dikkat ettiğim iki temel husus vardır:
+
+1. **Stateless (Durumsuz) Olması:** Sunucunun geçmişi hatırlamaması, sunucuyu ölçeklememizi (Scaling) kolaylaştırır. Her istek kendi ayakları üzerinde durur.
+    
+2. **Güvenlik (HTTPS):** Veri güvenliği ve bütünlüğü (Data Integrity) için, verilerin transfer sırasında şifrelenmesini sağlayan SSL/TLS katmanını (HTTPS) mutlaka kullanırız. Bu artık bir tercih değil, endüstri standardıdır."

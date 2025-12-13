@@ -165,3 +165,12 @@ Mülakatlarda "Projende neden Minimal API seçtin?" diye sorarlar. İşte cevab�
 
 ---
 
+### 1. Minimal API
+
+**🧒 6 Yaşındaki Çocuğa (Yemek Analojisi):** "Eski usül API yazmayı (Controller), çok **resmi bir akşam yemeğine** benzetebiliriz. Sadece bir köfte yemek istiyorsun ama önce davetiye basılıyor, masalar düzenleniyor, garsonlar kıyafetlerini giyiyor, çatal bıçak sıraya diziliyor (Ceremony/Tören). Köfte gelene kadar çok bekliyorsun. **Minimal API** ise, acıktığında buzdolabını açıp hemen kendine bir sandviç hazırlamak gibidir. Garson yok, masa düzeni yok, kıyafet kuralı yok. Direkt kapağı açıyorsun (**Route**) ve yemeğini alıyorsun (**Handler**). Sonuçta ikisinde de karnın doyuyor ama Minimal API'da hiç vakit kaybetmiyorsun."
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction):** "Minimal API, .NET'in modern **Cloud-Native** ve **Microservices** dünyasına adaptasyonudur. Geleneksel MVC mimarisinin getirdiği ağır yükü (Controller Instance oluşturma, karmaşık Filter Pipeline süreçleri) ortadan kaldırarak, **Low-Ceremony** (Az Törenli) ve yüksek performanslı bir yapı sunar. Bunu tercih etmemizin iki teknik sebebi var:
+
+1. **Performans:** Aradaki katmanlar kalktığı için **Throughput** (Saniye başına istek) artar ve RAM kullanımı düşer.
+    
+2. **Serverless Uyumu:** Azure Functions veya AWS Lambda gibi ortamlarda **Cold Start** (İlk açılış hızı) çok kritiktir. Minimal API çok daha hızlı ayağa kalkar, bu da bize bulut maliyetlerinde tasarruf sağlar."

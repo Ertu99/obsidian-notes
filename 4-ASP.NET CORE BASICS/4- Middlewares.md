@@ -217,3 +217,20 @@ Olay an be an şöyle gerçekleşir:
 Sonuç: **A1 -> B1 -> C -> B2 -> A2**
 
 Bu "U Dönüşü" yapısını anlamak, ileride "Exception Handling" (Hata Yakalama) middleware'lerinin neden en dışta olduğunu anlamanı sağlayacak (çünkü hatayı dönüş yolunda yakalarlar).
+
+### 1. Middleware
+
+**🧒 6 Yaşındaki Çocuğa (Havaalanı Güvenliği Analojisi):** "Middleware, havaalanındaki güvenlik kontrollerine benzer. Uçağa (Controller) binmeden önce sırayla;
+
+1. Bavulunu kontrol ederler.
+    
+2. Biletine bakarlar.
+    
+3. Pasaportuna bakarlar. Eğer pasaportun yoksa, seni daha 3. adımda durdurur ve geri gönderirler (Short-Circuit). Uçağa asla ulaşamazsın. Uçaktan indiğinde (Response) ise bu kapılardan tersten geçerek çıkışa gidersin."
+    
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction):** "Middleware, ASP.NET Core'un istek (Request) işleme omurgasıdır. Gelen isteği karşılayan ve cevabı istemciye dönen bir **boru hattı (Pipeline)** mekanizmasıdır. Bu yapıyı iki amaçla kullanırız:
+
+1. **Cross-Cutting Concerns:** Kimlik doğrulama (Auth), Loglama, Hata Yönetimi gibi uygulamanın her yerini ilgilendiren işleri merkezi bir yerde hallederiz.
+    
+2. **Request Filtering:** Geçersiz veya yetkisiz istekleri, daha veritabanına veya Controller'a ulaşmadan en baştan (Pipeline başında) keserek sunucu kaynaklarını koruruz."

@@ -91,7 +91,7 @@ Tek bir "NoSQL" yoktur, kullanım amacına göre 4 ana türü vardır:
     
     JSON
     
-    ```
+    ```json
     // MongoDB Örneği
     {
       "id": 1,
@@ -165,3 +165,16 @@ NoSQL, **Yatay (Horizontal) Scaling** için tasarlanmıştır. Pahalı bir sunuc
 
 ---
 
+### 1. SQL (RDBMS) vs NoSQL
+
+**🧒 6 Yaşındaki Çocuğa:** "Veritabanlarını odandaki eşyaları toplama şekline benzetebiliriz.
+
+**SQL (İlişkisel Veritabanı), senin kıyafet dolabın gibidir.** İçinde özel bölmeler var. Çorap çekmecesine sadece çorap koyabilirsin, oraya montunu tıkıştıramazsın (Data Integrity/Schema). Her şey çok düzenlidir. Eğer dolabın dolarsa, marangozu çağırıp dolabı büyütmen gerekir (Dikey Ölçekleme). Ama annen 'Mavi çorabın nerede?' dediğinde saniyesinde bulursun.
+
+**NoSQL ise senin oyuncak sepetin gibidir.** İçine araba da atarsın, bebek de, top da. 'Sadece araba atabilirsin' diye bir kural yok (Schema-less). Çok hızlı toplarsın, fırlatıp atarsın. Eğer sepet dolarsa, gidip yanına bir sepet daha koyarsın (Yatay Ölçekleme). Ama 'En küçük kırmızı lego parçam nerede?' diye aradığında bulmak biraz zor olabilir."
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction):** "Veritabanı seçimi yaparken **'Veri Tutarlılığı mı (Consistency)?'** yoksa **'Hız ve Esneklik mi (Availability/Scalability)?'** öncelikli, buna karar veririz.
+
+**RDBMS (SQL):** Eğer finansal işlemler, sipariş yönetimi gibi verinin bütünlüğünün (ACID) hayati olduğu ve karmaşık ilişkilerin (JOIN) gerektiği bir yapı kuruyorsak SQL (PostgreSQL, SQL Server) vazgeçilmezdir. Önceden belirlenmiş şemalar sayesinde veri kalitesini garanti altına alırız.
+
+**NoSQL:** Ancak verimiz çok hızlı büyüyorsa, şeması sürekli değişiyorsa (örn: Ürün kataloğu, IoT verileri) veya milisaniyeler içinde milyonlarca okuma/yazma yapmamız gerekiyorsa NoSQL (MongoDB, Redis) tercih ederiz. NoSQL, katı tutarlılık kurallarını (BASE) biraz esneterek bize sınırsız ölçeklenme (Horizontal Scaling) ve yüksek performans sağlar."

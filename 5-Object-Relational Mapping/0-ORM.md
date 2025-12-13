@@ -132,3 +132,12 @@ kaynağına göre özetleyelim:
 
 ---
 
+### 1. ORM (Object-Relational Mapping)
+
+**🧒 6 Yaşındaki Çocuğa (Lego ve Defter Analojisi):** "Senin harika bir Lego robotun var (Nesne/Object). Robotun kolları, bacakları ve kafası var. Ama oyuncaklarını sakladığın yer bir kutu değil, sadece düz bir defter (Veritabanı). Lego robotunu o defterin arasına koyamazsın, sayfa kapanmaz. İşte **ORM**, senin sihirli bir yardımcındır. Sen robotu saklamak istediğinde, yardımcı robotu parçalarına ayırır ve deftere yazar: '1 Kafa, 2 Kol, 2 Bacak'. Sen oynamak istediğinde ise defteri okur, parçaları birleştirir ve sana robotu geri verir. Ama dikkatli olmalısın! Bazen yardımcın her bir parça için defteri tekrar tekrar açıp kapatırsa (**N+1 Problemi**), oyun oynamaya vaktin kalmaz."
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction):** "ORM, Nesne Yönelimli Programlama (OOP) dünyası ile İlişkisel Veritabanı (RDBMS) dünyası arasındaki **dil ve yapı uyuşmazlığını (Impedance Mismatch)** çözen bir soyutlama katmanıdır. Yazılım geliştirme sürecinde bize iki büyük avantaj sağlar:
+
+1. **Productivity (Verimlilik):** Karmaşık SQL sorguları yazmak yerine, C# nesneleri üzerinden veritabanı işlemleri (CRUD) yaparak geliştirme hızımızı artırır.
+    
+2. **Maintainability (Bakım):** Veritabanı şemasından bağımsız kod yazmamızı sağlar (Database Agnostic). Ancak bir Mühendis olarak, ORM'in oluşturduğu SQL'i her zaman denetim altında tutarım. Özellikle raporlama gibi performansın kritik olduğu yerlerde EF Core yerine **Dapper (Micro ORM)** kullanmayı, veri çekerken de **N+1** problemine düşmemek için `Include` (Eager Loading) stratejilerini doğru uygulamayı tercih ederim."

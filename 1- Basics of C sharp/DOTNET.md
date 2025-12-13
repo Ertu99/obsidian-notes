@@ -48,7 +48,7 @@ Teoriyi konuştuk, şimdi bu anlattıklarımın kodda nerede olduğunu görelim.
 
 C#
 
-```
+```cs
 using System;
 using System.Runtime.InteropServices; // BCL'den bir kütüphane çağırdık.
 
@@ -94,3 +94,12 @@ Süreç şöyle işler:
     
 
 **Neden Böyle?** Eğer `.dll` içinde direkt makine kodu olsaydı, Windows'ta derlediğin proje Linux'ta çalışmazdı. İçinde "Ara Dil (IL)" olduğu için, Linux'taki CLR alıp Linux'a göre, Windows'taki CLR alıp Windows'a göre çeviriyor.
+
+
+### Feynman Tekniği
+
+### 1. .NET / CLR / IL
+
+**🧒 6 Yaşındaki Çocuğa:** "Bilgisayar aslında sadece 'Bip-Bop' (0 ve 1) dilinden anlayan bir uzaylı gibidir. Sen ise Türkçe (C#) konuşuyorsun. Sen bir hikaye yazdığında (Kod), bunu hemen uzaylıya vermiyoruz. Önce bunu **'Gizli Ajan Kodu'na (IL)** çevirip bir zarfa koyuyoruz (.dll dosyası). Bu zarfı ister Windows gezegenine, ister Linux gezegenine götürebilirsin. Zarfı açtığımız an, oradaki **Süper Tercüman (CLR)** devreye giriyor. Gizli kodu okuyor ve o anki uzaylının anlayacağı 'Bip-Bop' diline çeviriyor (JIT). Ayrıca bu Tercüman çok titiz; sen oyun oynarken etrafa saçtığın oyuncakları (Memory) arkandan topluyor (Garbage Collector), böylece odan hep temiz kalıyor."
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction):** ".NET, kodumuzun işletim sisteminden bağımsız çalışmasını sağlayan **Yönetilen Bir Çalışma Ortamıdır (Managed Execution Environment).** Yazdığımız kod doğrudan makine diline değil, **Ara Dile (IL)** derlenir. Bu sayede uygulamamızı bir kere derleyip (.dll), Windows veya Linux sunucularda değişiklik yapmadan çalıştırabiliriz (Portability). Bu ortamın kalbi olan **CLR (Common Language Runtime)**, sadece kodu çalıştırmakla kalmaz; bellek yönetimi (Memory Management) ve hata yakalama gibi alt seviye işleri otomatik yaparak, bizim iş mantığına odaklanmamızı ve geliştirme hızımızın artmasını sağlar."

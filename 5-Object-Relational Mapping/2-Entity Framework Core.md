@@ -630,3 +630,14 @@ using (var scope = app.Services.CreateScope()) {
 
 ---
 
+### 1. Entity Framework Core (EF Core)
+
+**🧒 6 Yaşındaki Çocuğa (Akıllı Tablet ve Şantiye Analojisi):** "Eskiden babalarımız şantiyede (Veritabanı) çalışırken, kocaman masaüstü bilgisayarlar kullanmak zorundaydı. Bu bilgisayarlar taşınamıyordu, sadece ofiste (Windows) çalışıyordu. **EF Core**, mühendislerin elindeki **süper hızlı ve hafif bir tablettir.** Bu tableti alıp parka, eve veya başka şehre (Linux/Mac) götürebilirsin. En güzel özelliği de şu: Sen tablette evin rengini 'Mavi' yapıp 'Kaydet' tuşuna bastığında, tablet şantiyedeki robotlara haber verir. Robotlar gider ve _sadece_ o duvarı maviye boyar (**Change Tracking**). Evi yıkıp baştan yapmazlar. Ayrıca evin planına yeni bir oda eklemek istersen (**Migrations**), tablete çizmen yeterli; robotlar odayı otomatik inşa eder."
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction):** "EF Core, modern .NET uygulamaları için geliştirilmiş; hafif, genişletilebilir ve platform bağımsız (Cross-Platform) bir ORM aracıdır. Eski Entity Framework'ün aksine modüler bir yapıdadır ve bulut tabanlı (Cloud-Native) uygulamalar için optimize edilmiştir. Ben projelerimde EF Core'u üç temel özelliği için ana veri erişim teknolojisi olarak kullanırım:
+
+1. **LINQ Support:** Tip güvenli (Type-Safe) sorgular yazarak hataları derleme zamanında (Compile Time) yakalamak.
+    
+2. **Change Tracking & Unit of Work:** `DbContext` sayesinde, yapılan değişiklikleri otomatik takip edip, `SaveChanges()` ile tek bir Transaction içinde veritabanına yansıtarak veri bütünlüğünü korumak.
+    
+3. **Migrations:** Veritabanı şema değişikliklerini (Schema Evolution) kod tarafında versiyonlayarak, CI/CD süreçlerinde veritabanı güncellemelerini otomatize etmek."

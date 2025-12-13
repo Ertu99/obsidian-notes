@@ -497,3 +497,15 @@ Dapper,.NET Core mikroservis ekosisteminde performans, kontrol ve şeffaflığı
 
 Bir mikroservis geliştiricisi için Dapper, sadece bir kütüphane değil, SQL diline ve veritabanı mimarisine hakimiyetin bir göstergesidir. Doğru mimari desenlerle (Scoped Connection, Polly Retries, Integration Tests) desteklendiğinde, Dapper ile inşa edilen sistemler, en yüksek trafik yükleri altında bile kararlı ve hızlı çalışmaya devam edecektir.
 
+
+### 1. Dapper (Micro ORM)
+
+**🧒 6 Yaşındaki Çocuğa (Süpermarket Analojisi):** "Hatırlıyor musun, EF Core senin 'Yardımcı Robotun'du (Full ORM). Sen ona 'Bana çikolata getir' diyordun, o gidip rafları arıyor, paketi inceliyor, sepete koyuyor ve sana getiriyordu. Biraz yavaştı ama senin yerinden kalkmana gerek kalmıyordu.
+
+**Dapper** ise senin elindeki 'Alışveriş Listesi'dir. Sen listeye tam olarak ne istediğini yazıyorsun: '3. Reyon, 2. Raf, Kırmızı Çikolata'. (Bu SQL kodudur). Marketteki en hızlı koşucuyu gönderiyorsun. O hiç düşünmüyor, rafları aramıyor. Direkt dediğin yere gidip o çikolatayı kapıp sana fırlatıyor. Çok daha hızlıdır ama listeyi (SQL) senin doğru yazman gerekir. Yanlış yazarsan eli boş döner."
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction):** "Dapper, veritabanı işlemlerinde **yüksek performans** ve **sorgu hakimiyeti** gerektiren durumlarda tercih ettiğim bir Micro ORM kütüphanesidir. Stack Overflow tarafından geliştirilen bu araç, ADO.NET'in üzerine oturan çok ince bir katmandır. Ben projelerimde genelde **Hibrit Yaklaşım** kullanırım:
+
+1. **Write (Yazma) İşlemleri:** Veri tutarlılığı ve iş kuralları önemli olduğu için **EF Core** kullanırım (Change Tracking avantajı).
+    
+2. **Read (Okuma) / Raporlama:** Karmaşık join'ler içeren veya binlerce satır veri çektiğimiz ekranlarda, EF Core'un oluşturduğu yükü (Overhead) taşımamak için **Dapper** ile saf SQL yazarım. Böylece hem geliştirme hızını hem de uygulama performansını optimize etmiş olurum."

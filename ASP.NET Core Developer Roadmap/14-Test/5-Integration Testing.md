@@ -286,3 +286,12 @@ GitHub Actions sunucuları (Runner) zaten Ubuntu üzerindedir. Testcontainers'ı
 Modern CI araçlarının çoğu bunu destekler. Sadece pipeline konfigürasyonunda Docker servisini aktif etmen yeterlidir. Ekstra bir SQL Server kurmana gerek kalmaz, kodun kendi veritabanını kendi yanında getirir.
 
 ---
+**🧒 6 Yaşındaki Çocuğa (Araba Çarpışma Testi Analojisi):** "Unit test, arabanın sadece direksiyonunu veya fren pedalını fabrikada tek tek kontrol etmek gibidir. Parça sağlamdır ama takınca çalışıp çalışmayacağını bilemezsin. **Entegrasyon Testi** ise arabayı komple toplayıp duvara çarpmaktır! Eskiden bunu yapmak için gerçekten bir araba parçalamak gerekiyordu, çok pahalıydı. Şimdi **Testcontainers** diye bir sihirbazımız var. Test başladığında sihirbaz parmağını şıklatır ve havadan **gerçek bir araba (Docker Container)** yaratır. Biz testi yaparız, arabayı duvara çarparız. Test bitince sihirbaz tekrar parmağını şıklatır ve hurdayı yok eder. Böylece her testte tertemiz, sıfır kilometre bir arabayla test yaparız. Hem de gerçek motorla, oyuncak motorla (In-Memory) değil!"
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction - Teorik Uzman Dili):** "Yazılım kalitesini garanti altına alırken Unit Testler iş mantığını doğrular ancak sistemin parçalarının (Veritabanı, Cache, API) birlikte uyum içinde çalışıp çalışmadığını göstermez. Bu boşluğu doldurmak için **Entegrasyon Testleri** devreye girer. Buradaki modern mimari yaklaşımım şöyledir:
+
+- **Host Simulation:** `WebApplicationFactory` kullanarak, uygulamayı bellek içinde (In-Memory) ama tam fonksiyonel bir sunucu gibi ayağa kaldırırım. Bu, ağ gecikmesi olmadan gerçek HTTP isteklerini simüle etmemi sağlar.
+    
+- **Service Replacement:** Ödeme sistemleri gibi harici bağımlılıkları test sırasında 'Mock'layarak izole ederken; veritabanı gibi kritik bileşenleri gerçek ortamda test etmeyi tercih ederim.
+    
+- **Disposable Infrastructure (Testcontainers):** Eski tip 'EF Core In-Memory' veritabanlarının davranış tutarsızlıklarından (False Positives) kaçınmak için **Testcontainers** kütüphanesini standart olarak kullanırım. Bu sayede her test koşusunda Docker üzerinde izole, gerçek bir SQL Server veya Redis instance'ı ayağa kalkar ve test bitiminde imha edilir. Bu, CI/CD pipeline'larında 'Works on my machine' sorununu tamamen ortadan kaldırır."

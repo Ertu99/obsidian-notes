@@ -170,3 +170,14 @@ MassTransit, Entity Framework Core ile entegre çalışır.
 Bu sayede **%100 Tutarlılık** sağlanır.
 
 ---
+### 2. Message Bus (MassTransit)
+
+**🧒 6 Yaşındaki Çocuğa (Evrensel Kumanda Analojisi):** "Evde televizyon için ayrı, klima için ayrı, ses sistemi için ayrı kumanda olması ne kadar zor değil mi? RabbitMQ kullanmak, her cihaz için ayrı kumanda kullanmak gibidir. **MassTransit** ise sihirli bir **Evrensel Kumanda**dır. Sen sadece 'Aç' tuşuna basarsın. O sinyali alır, RabbitMQ televizyonuna mı gönderecek, Azure klimasına mı gönderecek kendisi bilir. Senin televizyonun markası değişse bile (Infrastructure Change) sen kumandanı değiştirmek zorunda kalmazsın. Ayrıca bu kumanda çok akıllıdır. Sen tuşa bastığında televizyonun fişi çekikse, sinyali hafızasına alır. Elektrik gelince kendi kendine televizyonu açar (**Retry / Outbox**). Senin tekrar tekrar tuşa basmana gerek kalmaz."
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction - Teorik Uzman Dili):** "Dağıtık sistemlerde (Distributed Systems) servisler arası asenkron iletişimi yönetmek için ham sürücüler (RabbitMQ Client gibi) yerine, **Enterprise Service Bus (ESB)** desenini uygulayan **MassTransit** gibi soyutlama katmanları (Abstraction Layer) tercih edilir. Bu mimari kararın temelinde üç ana mühendislik prensibi yatar:
+
+- **Transport Agnostic (Altyapı Bağımsızlığı):** Kod tabanını altta yatan mesajlaşma teknolojisine (RabbitMQ, Azure Service Bus, Amazon SQS) sıkı sıkıya bağlamamak (Tight Coupling), gelecekteki altyapı değişikliklerini maliyetsiz hale getirir.
+    
+- **Resiliency & Reliability (Dayanıklılık):** Ham sürücülerde manuel yönetilmesi gereken 'Connection Recovery', 'Circuit Breaker' ve 'Message Serialization' gibi karmaşık süreçler MassTransit tarafından standart ve güvenli bir şekilde yönetilir. Özellikle **Outbox Pattern** entegrasyonu sayesinde, veritabanı işlemi ile mesaj gönderiminin aynı Transaction içinde (Atomik) gerçekleşmesi sağlanarak 'Dual Write' veri tutarsızlığı riski ortadan kaldırılır.
+    
+- **Orchestration (Saga):** Mikroservislerdeki karmaşık iş akışlarını (Long Running Transactions) yönetmek için **State Machine Saga** yeteneği sayesinde, durum yönetimi ve hata durumunda telafi işlemleri (Compensating Transactions) merkezi ve görselleştirilebilir bir yapıda kurgulanır."

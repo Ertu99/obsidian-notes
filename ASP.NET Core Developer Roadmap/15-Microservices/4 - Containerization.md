@@ -291,3 +291,16 @@ Kodun içine şifre veya DB adresi gömmek yasaktır.
     - Aynı fiziksel Cluster'ı mantıksal parçalara böler.
         
     - `Dev`, `Test`, `Prod` ortamlarını aynı donanım üzerinde ama birbirini görmeyecek şekilde izole çalıştırabilirsin.
+
+
+**🧒 6 Yaşındaki Çocuğa (Liman ve Yük Gemisi Analojisi):** "Eskiden oyuncaklarını taşınırken bir kutuya koyardık, kıyafetlerini başka bir kutuya. Yeni eve gittiğimizde 'Hangi kutu nerde?' diye karışırdı. **Docker**, senin odanı olduğu gibi küçültüp sihirli bir **Konteyner Kutusuna** koymak gibidir. Yatağın, oyuncakların, hatta duvarının rengi bile o kutunun içindedir. Bu kutuyu alıp dünyanın öbür ucundaki bir eve götürsen bile, kutuyu açtığında odan birebir aynı şekilde çıkar. 'Bu odada priz yok' veya 'Burası soğuk' demezsin. **Kubernetes** ise bu kutulardan binlerce taşıyan dev bir **Yük Gemisinin Kaptanıdır**. Kaptan, hangi kutunun hangi rafta duracağına karar verir. Eğer fırtınada bir kutu denize düşerse, kaptan hemen o kutunun aynısından bir tane daha getirir (**Self-Healing**). Geminin dengesini hep korur."
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction - Teorik Uzman Dili):** "Yazılım geliştirme ve dağıtım süreçlerinde sıkça karşılaşılan 'Ortam Uyuşmazlığı' (Environment Discrepancy) sorununu elimine etmek için **Containerization** teknolojisi modern mimarinin temel taşıdır. Bu alandaki mimari standartlar şöyledir:
+
+- **Docker Strategy:** Uygulamalar, işletim sisteminden bağımsız, tüm kütüphaneleriyle birlikte çalışan **Container Image**'ları olarak paketlenir. Kaynak yönetimi ve build sürelerinin optimizasyonu için **Layer Caching** ve **Multi-Stage Builds** tekniklerinin uygulanması esastır.
+    
+- **Orchestration (Kubernetes):** Tekil konteyner yönetimi yerine, kurumsal ölçekte (Enterprise) süreklilik, ölçeklenebilirlik ve yük dengeleme (Load Balancing) ihtiyaçları için **Kubernetes** orkestrasyonu tercih edilir.
+    
+- **Resiliency & Zero Downtime:** Sürüm güncellemelerinde sistemin kapanmaması için **Rolling Update** stratejisi benimsenir. Ayrıca **Liveness/Readiness Probes** konfigürasyonları ile uygulamanın sağlık durumu sürekli izlenerek, sadece sağlıklı Pod'lara trafik akması garanti altına alınır.
+    
+- **Elasticity:** Değişken trafik yüklerinde sistemin hayatta kalması için **Horizontal Pod Autoscaler (HPA)** tanımlanarak, kaynak kullanımına (CPU/RAM) göre otomatik ölçeklenme (Auto-Scaling) mekanizması kurgulanır."

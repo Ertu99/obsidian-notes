@@ -287,3 +287,19 @@ YARP ise Kestrel üzerine kurulu olduğu için End-to-End HTTP/2 destekler.
 - İstemci -> (HTTP/2) -> YARP -> (HTTP/2) -> Mikroservis.
     
 - Hiçbir protokol düşürme (Downgrade) işlemi olmaz. Performans kaybı sıfırdır.
+
+
+
+
+
+**🧒 6 Yaşındaki Çocuğa (Resepsiyonist Analojisi):** "Büyük bir otele gittiğini düşün. Otelde yüzlerce oda var (Mikroservisler). Sen içeri girdiğinde hangi odanın boş olduğunu, hangi odanın temiz olduğunu veya 505 numaralı odanın yerini bilemezsin. Girişteki **Resepsiyonist (API Gateway)** sana yardım eder. Sen ona 'Ben uyumak istiyorum' dersin. O seni 505'e gönderir. 'Ben yemek yemek istiyorum' dersin. O seni restorana gönderir. Sen odaların yerini ezberlemek zorunda kalmazsın, sadece resepsiyonistle konuşursun. Ayrıca otele kötü niyetli biri girmek isterse (**Security/Auth**), resepsiyonist onu daha kapıdayken durdurur, odalara yaklaştırmaz bile. Eskiden bu resepsiyonist her şeyi deftere yazardı (**Ocelot/JSON**), yeni resepsiyonist ise süper bir bilgisayar kullanıyor ve çok daha hızlı çalışıyor (**YARP**)."
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction - Teorik Uzman Dili):** "Mikroservis mimarilerinde, istemcilerin (Client) onlarca farklı servisle doğrudan muhatap olması; güvenlik zaafiyeti, yönetim zorluğu ve 'Chatty' (çok konuşan) ağ trafiği sorunları yaratır. Bu kaosu yönetmek için **API Gateway Pattern** uygulanması bir endüstri standardıdır. Teknoloji seçiminde yaklaşımım şöyledir:
+
+- **Legacy/Simple Scenarios:** Basit ve JSON tabanlı konfigürasyon gerektiren projelerde **Ocelot** yeterli bir Reverse Proxy çözümüdür. Routing ve Aggregation ihtiyaçlarını karşılar.
+    
+- **Modern/High-Performance:** Ancak Microsoft'un resmi olarak desteklediği ve Kestrel altyapısı üzerine inşa ettiği **YARP (Yet Another Reverse Proxy)**, modern projeler için birincil tercihimdir.
+    
+- **Why YARP?:** YARP, HTTP/2 ve gRPC protokollerini native desteklemesi, dinamik konfigürasyon (IProxyConfigProvider) sayesinde 'Zero Downtime' güncelleme imkanı sunması ve yüksek performansı ile Ocelot'un mimari darboğazlarını aşmaktadır.
+    
+- **Cross-Cutting Concerns:** Gateway katmanında sadece yönlendirme değil; Authentication (Token doğrulama), Rate Limiting ve Service Discovery entegrasyonlarını da merkezi olarak çözerek, arkadaki mikroservislerin yükünü hafifletirim."

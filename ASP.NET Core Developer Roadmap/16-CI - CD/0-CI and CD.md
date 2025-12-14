@@ -177,3 +177,28 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal # Testleri koş!
 ```
+
+
+
+### 7. CI/CD (GitHub Actions / Azure DevOps)
+
+**🧒 6 Yaşındaki Çocuğa (Robotlu Pizza Dükkanı Analojisi):** "Eskiden pizzacı amca sipariş geldiğinde hamuru eliyle açar, malzemeyi koyar, fırına atardı. Bazen tuzu unuturdu, bazen pizzayı yakardı, bazen de çok yavaş olurdu. **CI/CD**, dükkana kocaman bir **Pizza Robotu** almak gibidir. Sen sadece düğmeye basarsın (**Commit**).
+
+1. Robot hamuru hazırlar (**Build**).
+    
+2. Sonra küçük bir parça tadına bakar, 'Tuzu iyi mi?' diye kontrol eder (**Test**). Eğer kötüyse pizzayı çöpe atar, sana da 'Tuz koymamışsın!' diye kırmızı ışık yakar.
+    
+3. Tadı güzelse pizzayı kutuya koyar (**Package**).
+    
+4. En sonunda da pizzayı müşterinin evine drone ile gönderir (**Deploy**). Robot hiç yorulmaz, tuzu asla unutmaz ve her pizzayı aynı mükemmellikte yapar."
+    
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction - Teorik Uzman Dili):** "Modern yazılım geliştirmede, kodun kalitesini ve teslimat hızını artırmak için manuel süreçler yerine tam otomatize edilmiş **CI/CD (Sürekli Entegrasyon ve Dağıtım)** boru hatları (Pipelines) kurulması endüstri standardıdır. Bir DevOps kültürünün mimari temelleri şunlardır:
+
+- **Quality Gates (Kalite Kapıları):** Kodun sadece derlenmesi (Build) yeterli değildir. Pipeline sürecine **Unit Testler**, **SonarQube** ile statik kod analizi ve güvenlik taramaları (Vulnerability Scan) entegre edilerek, hatalı kodun üretim ortamına ulaşması daha en baştan engellenir.
+    
+- **Secret Management:** Güvenlik ihlallerini önlemek için; veritabanı şifreleri veya API anahtarları asla kodun içinde (Hardcoded) tutulmaz. Azure KeyVault veya GitHub Secrets gibi güvenli kasalardan, deployment anında **Environment Variable** olarak enjekte edilir.
+    
+- **Zero Downtime Deployment:** Canlıya geçişlerde hizmet kesintisi yaşanmaması için **Blue-Green** veya **Canary** dağıtım stratejileri uygulanır. Bu sayede yeni versiyon önce izole bir ortamda veya kısıtlı bir kullanıcı kitlesinde doğrulanır, olası bir hatada anında geri alma (Rollback) imkanı sağlanır.
+    
+- **Infrastructure as Code:** Pipeline sadece uygulama kodunu değil, Terraform veya Bicep gibi araçlarla altyapıyı da yöneterek, ortamlar arası tutarlılığı (Consistency) garanti eder."

@@ -135,3 +135,24 @@ Bu yüzden Azure Portal'a girip elle "tık tık" sunucu kurulmaz. Altyapı kod i
     
 
 ---
+
+
+
+**🧒 6 Yaşındaki Çocuğa (Pizza Analojisi):** "Bulut bilişimi, canın pizza çektiğinde ne yapacağına benzetebiliriz.
+
+1. **On-Premise (Kendi Sunucumuz):** Evde pizza yapmaktır. Malzemeyi sen alırsın, hamuru yoğurursun, fırını yakarsın, bulaşıkları sen yıkarsın. Çok zahmetlidir.
+    
+2. **IaaS (Altyapı):** Marketten **donmuş pizza** almaktır. Hamur ve malzeme hazırdır ama pişirmek yine senin işindir.
+    
+3. **PaaS (Platform):** **Eve sipariş** vermektir. Peyniri kim aldı, fırın kaç derece yandı ilgilenmezsin. Sadece pizzayı seçersin, pişirip getirirler.
+    
+4. **Serverless (FaaS):** Bir restorana gidip **bir dilim** yemektir. Fırınla, kutuyla uğraşmazsın. Sadece yediğin dilim kadar para ödersin."
+    
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction - Teorik Uzman Dili):** "Bulut teknolojileri, yazılım dünyasında **sermaye giderlerini (CapEx)** azaltıp, **işletme giderlerine (OpEx)** geçişi sağlayan en önemli dönüşümdür. Buradaki temel amaç, donanım yönetimiyle vakit kaybetmek yerine **uygulamanın kendisine** odaklanmaktır. Mimari kararlarda şu hiyerarşi izlenir:
+
+- **PaaS (Azure App Service):** Modern .NET projelerinde standart tercihtir. İşletim sistemi güncellemeleri ve bakım yükünü sağlayıcıya (Microsoft) devrederek geliştirme hızını artırır.
+    
+- **IaaS (Azure VM):** Sadece platformun desteklemediği veya çok spesifik işletim sistemi ayarları gerektiren eski (Legacy) uygulamalar için bir zorunluluktur.
+    
+- **Serverless (Azure Functions):** Trafik yükünün öngörülemediği veya olay tabanlı (Event-Driven) işlerde, kaynak israfını önlemek için ideal çözümdür. Ayrıca, Cloud ortamında sunucuların manuel değil, **Infrastructure as Code (IaC)** prensibiyle kodla yönetilmesi, sistemin sürdürülebilirliği açısından kritik önem taşır."

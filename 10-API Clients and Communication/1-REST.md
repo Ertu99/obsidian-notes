@@ -226,3 +226,32 @@ Tarayıcılar, siteA.com'daki bir JavaScript'in api.siteB.com'a istek atmasını
     
 
 ---
+
+**🧒 6 Yaşındaki Çocuğa (Otomat Makinesi Analojisi):** "REST API'yi, AVM'deki o büyük yiyecek otomatlarına benzetebiliriz. Bu makinenin kuralları bellidir ve herkes aynı şekilde kullanır (**Standart Arayüz**):
+
+1. Her yiyeceğin bir numarası vardır (A1, B2). Bu numaralar **URL**'dir (`/products/1`).
+    
+2. Camdan içeri bakmak (**GET**) bedavadır ve güvenlidir. 100 kere de baksan çikolata eksilmez (**Idempotency**).
+    
+3. Makineye para atıp tuşa basmak (**POST**) bir şeyleri değiştirir. Eğer makine parayı yutar ve ürün vermezse, tekrar para atarsan ikinci kez paran gider (POST güvenli değildir!).
+    
+4. Makinenin sana verdiği cevaplar da standarttır (**Status Codes**):
+    
+    - Ürün düştü: **200 OK**.
+        
+    - O rafta ürün yok: **404 Not Found**.
+        
+    - Makineye sahte para veya gazoz kapağı attın: **400 Bad Request**.
+        
+    - Makinenin motoru yandı, duman çıkıyor: **500 Internal Server Error**. Sen makineyle konuşmazsın, sadece düğmelere basarsın, o da sana sonucu verir."
+        
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction - Teorik Uzman Dili):** "REST, dağıtık sistemlerde kaynak (Resource) odaklı iletişim kurmanın endüstri standardıdır. Ancak 'RESTful' diyebilmek için sadece JSON dönmek yetmez; **Richardson Olgunluk Modeli**'nde en az Seviye 2'yi hedefleriz. Modern bir API mimarisinde şu standartlar esastır:
+
+- **Semantik Doğruluk:** HTTP fiilleri (GET, POST, PUT, DELETE) ve Durum Kodları (200, 404, 500) evrensel anlamlarına uygun kullanılmalıdır. Bu, istemci tarafındaki hata yönetimini standartlaştırır.
+    
+- **Idempotency:** Ağ hatalarına karşı dirençli (Resilient) bir sistem için; GET, PUT ve DELETE işlemlerinin tekrarlanabilir olması, yan etki yaratmaması gerekir. POST işlemleri içinse 'Idempotency Key' mekanizmaları kurgulanır.
+    
+- **Documentation & Contracts:** API, **OpenAPI (Swagger)** standartlarıyla belgelenmeli ve 'Contract-First' yaklaşımıyla Frontend/Mobil ekiplerinin entegrasyonu otomatize edilmelidir.
+    
+- **Performance & Security:** Büyük veri setleri için **Pagination** ve **Filtering** stratejileri uygulanmalı; sistemi korumak için **Rate Limiting** middleware'leri devreye alınmalıdır."

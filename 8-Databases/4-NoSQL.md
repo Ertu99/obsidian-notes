@@ -125,3 +125,13 @@ NoSQL'de ise tam tersi: "Veriyi birleştir ve tekrar et" (Denormalization).
 
 ---
 
+
+**🧒 6 Yaşındaki Çocuğa (Oyuncak Kutusu Analojisi):** "Hatırlarsan SQL veritabanı, her parçanın yerinin belli olduğu özel bir Lego kutusuydu. **NoSQL** ise senin o kocaman, karışık oyuncak sepetindir. İçine istersen Lego atarsın, istersen peluş ayı, istersen de boya kalemi. Kimse sana 'Bu ayı buraya sığmaz' demez (**Schema-less**). Eğer sepet dolarsa, gidip marangozdan daha büyük bir sepet yaptırmana gerek yoktur. Yanına bir sepet daha koyarsın, sonra bir tane daha... Odanın sonuna kadar yan yana dizebilirsin (**Horizontal Scaling**). Ama sepet çok karışık olduğu için, 'En küçük mavi legom nerede?' diye aradığında bulman biraz zor olabilir. O yüzden en sevdiğin oyuncakları (Sık kullanılan veriler) birbirine bağlayıp iple asarsın (**Key-Value / Graph**), böylece hemen bulursun."
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction - Teorik Uzman Dili):** "NoSQL, modern yazılım mimarisinde RDBMS'in (SQL) yetersiz kaldığı; büyük hacimli (Big Data), yüksek hızlı ve yapısı değişken (Unstructured) verileri yönetmek için kullandığımız bir şemsiye terimdir. Mimari kararlarda 'SQL mi NoSQL mi?' sorusunun cevabı, **CAP Teoremi**'ndeki tercihimize dayanır:
+
+- **Availability (Erişilebilirlik) Öncelikliyse:** Örneğin bir sosyal medya akışı veya IoT sensör verisi gibi, ağ kopsa bile sistemin cevap vermesi gerekiyorsa (AP), **Cassandra** veya **DynamoDB** gibi çözümler tercih edilir. Burada 'Eventual Consistency' (Gecikmeli Tutarlılık) kabul edilebilir bir maliyettir.
+    
+- **Model Esnekliği Gerekiyorsa:** Ürün katalogları gibi her kaydın farklı özelliklere sahip olduğu durumlarda, **MongoDB** (Document Store) kullanarak şema bağımsız çalışmak geliştirme hızını artırır.
+    
+- **Performans Odaklıysak:** Veriyi SQL'deki gibi normalize edip JOIN'lerle uğraşmak yerine, **Denormalize** ederek (veriyi gömerek/embedding) tek seferde okumak, okuma performansını (Read Throughput) dramatik şekilde artırır. Modern mimarilerde genellikle **Polyglot Persistence** (Çoklu Veri Saklama) yaklaşımı uygulanır; yani ödeme işlemleri için SQL, ürün kataloğu için NoSQL, ilişkiler için Graph DB aynı anda kullanılır."

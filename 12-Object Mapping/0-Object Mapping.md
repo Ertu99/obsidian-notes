@@ -154,3 +154,12 @@ var dtos = _context.Users
 
 ---
 
+**🧒 6 Yaşındaki Çocuğa (Cüzdan Analojisi):** "Babanın cebindeki cüzdanı düşün (**Entity**). Bu cüzdanın içinde her şey var: Paralar, kredi kartları, kimlik, belki gizli bir fotoğraf. Eğer bakkal amca babana 'Sen kimsin?' diye sorarsa, baban cüzdanı komple bakkala vermez, değil mi? İçindeki paraları alabilirler! Baban cüzdanı açar, içinden sadece kimliği çıkarır ve bakkala gösterir (**DTO**). İşte **Object Mapping**, o cüzdanın içinden sadece gerekli olanı seçip alma işidir. Bunu elle yaparsan yavaş olur. **AutoMapper** ise sihirli bir makine gibidir; cüzdanı makineye atarsın, makine sana saniyesinde sadece kimliği fırlatır."
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction - Teorik Uzman Dili):** "Katmanlı mimaride, veritabanı nesnelerinin (Entities) doğrudan sunum katmanına (API) açılması; güvenlik zaafiyetlerine (Over-exposure) ve gereksiz veri transferine (Over-fetching) yol açar. Bu nedenle veri transferinde mutlaka **DTO (Data Transfer Object)** deseni uygulanır. Nesne dönüşümleri için mimari yaklaşım şöyledir:
+
+- **Boilerplate Yönetimi:** Kod tekrarını ve kirliliğini önlemek adına, manuel eşleme yerine **AutoMapper** veya **Mapster** gibi kütüphanelerle 'Convention-based' (Kural bazlı) otomatik eşleme tercih edilir.
+    
+- **Performance Optimization (Projection):** Mapping işleminin en kritik noktası bellektir. Veriyi veritabanından çektikten sonra RAM'de dönüştürmek yerine; **`ProjectTo`** gibi yöntemler kullanılarak, eşlemenin `IQueryable` seviyesinde yapılması sağlanır. Böylece veritabanına giden SQL sorgusu sadece istenen sütunları (`SELECT Name` gibi) çekecek şekilde optimize edilir.
+    
+- **Compile-Time Mapping:** Yüksek performans gerektiren (High-Frequency) senaryolarda ise, Reflection maliyetinden kaçınmak için çalışma zamanı yerine derleme zamanında kod üreten **Mapster** gibi çözümler mimariye dahil edilir."

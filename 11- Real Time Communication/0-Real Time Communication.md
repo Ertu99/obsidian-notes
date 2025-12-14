@@ -145,3 +145,12 @@ Tüm sunucular birbirine Redis Pub/Sub üzerinden bağlanır.
 
 ---
 
+**🧒 6 Yaşındaki Çocuğa (Mektup vs Telefon Analojisi):** "Eskiden arkadaşınla konuşmak için ona mektup yazıp postaya veriyordun (**HTTP Request**). Sonra cevabın gelmesini günlerce bekliyordun. Bazen sabırsızlanıp sürekli postacıya 'Mektup var mı?' diye soruyordun (**Polling**). Postacı 'Yok, yok, yok... Hah şimdi var!' diyordu. Bu çok yorucuydu. **WebSockets (SignalR)** ise arkadaşınla **telefonla konuşmak** gibidir. Numarayı bir kere çevirirsin, bağlantı kurulur (**Handshake**). Artık telefonu kapatmana gerek yoktur. Sen konuşursun, o konuşur, ikiniz aynı anda konuşabilirsiniz (**Full Duplex**). Hat hep açıktır ve ses saniyesinde gider."
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction - Teorik Uzman Dili):** "Geleneksel HTTP'nin 'İste-Cevapla' (Request-Response) yapısı, anlık veri akışı gerektiren modern uygulamalar (Borsa, Chat, Live Dashboard) için yetersiz kalmaktadır. Bu noktada sistemin ihtiyacına göre doğru Real-Time mimarisini kurgularım:
+
+- **WebSockets:** Düşük gecikme (Low Latency) ve Çift Yönlü (Full-Duplex) iletişim için altın standarttır. Sunucu ile istemci arasında kalıcı bir TCP tüneli açar.
+    
+- **SignalR:** .NET ekosisteminde, WebSocket yönetimini soyutlayan (Abstraction) ve bağlantı koptuğunda otomatik yeniden bağlanma, protokol fallback (WebSocket yoksa SSE/Long Polling'e düşme) gibi yetenekleri olan SignalR kütüphanesini tercih ederim.
+    
+- **Scaling Strategy (Redis Backplane):** Ancak Real-Time sistemler 'Stateful' (Durumlu) olduğu için yatayda ölçeklenmesi (Horizontal Scaling) zordur. Kullanıcı A Sunucu 1'e, Kullanıcı B Sunucu 2'ye bağlıysa birbirleriyle konuşamazlar. Bu sorunu çözmek için sunucular arasına **Redis Backplane** (Pub/Sub) kurarak, mesajların sunucular arasında senkronize edilmesini ve doğru istemciye ulaşmasını sağlarım."

@@ -83,3 +83,10 @@ Veri ve trafik arttıkça sunucuyu güçlendirmen gerekir (Daha çok RAM, daha g
 Ancak NoSQL gibi yanına 10 sunucu daha koyup (Scale Out) "Yükü paylaşın" demek RDBMS'de çok zordur (Sharding mümkündür ama yönetimi kabustur).
 
 ---
+
+
+### 1. Relational Databases (RDBMS)
+
+**🧒 6 Yaşındaki Çocuğa (Lego Talimatları Analojisi):** "NoSQL veritabanı, içine her şeyi rastgele atabildiğin kocaman bir oyuncak sepeti gibidir. **İlişkisel Veritabanı (RDBMS)** ise kutusundan talimat kitapçığı çıkan özel bir Lego setidir. Kitapçıkta (Şema) 'Buraya sadece kırmızı kare parça takılabilir' yazıyorsa, oraya mavi yuvarlak parça takamazsın. Kutu seni engeller (**Data Integrity**). Ayrıca bir kule yaparken (Transaction), kulenin yarısında parçan biterse veya kule devrilirse, 'Yarım kule yaptım' diyemezsin. O kuleyi tamamen söküp en başa dönmen gerekir (**ACID - Atomicity**). Ya tam bir kule yaparsın ya da hiç yapmamış sayılırsın. Yarım iş yoktur."
+
+**👨‍💼 Mülakatta Yöneticiye (Abstraction):** "İlişkisel veritabanları, veri bütünlüğünün (Data Integrity) ve işlem güvenliğinin (Transactional Safety) birinci öncelik olduğu sistemlerin temelidir. Finansal veriler, ödeme sistemleri veya kurumsal kaynak planlama (ERP) gibi hatayı tolere edemeyeceğimiz alanlarda **ACID** standartları (özellikle Atomicity ve Consistency) sayesinde verinin bozulmasını engelleriz. Performans tarafında ise, milyonlarca satırlık veriye hızlı erişmek için **B-Tree** yapısını kullanan **Indexing** stratejilerini (Clustered/Non-Clustered) doğru kurgulamak hayati önem taşır. Ancak mimariyi tasarlarken şunun farkındayım: RDBMS, **Dikey Ölçeklenmeye (Vertical Scaling)** uygundur. Eğer projemiz Google/Facebook ölçeğinde limitsiz bir büyüme ve esneklik gerektiriyorsa, RDBMS bir noktada darboğaz (Bottleneck) yaratabilir."

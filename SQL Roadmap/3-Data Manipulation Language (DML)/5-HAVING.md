@@ -53,7 +53,7 @@ SQL motoru sorguyu şu sırayla işler:
 
 SQL
 
-```
+```sql
 SELECT ProductId, SUM(Quantity)
 FROM Sales
 WHERE Year = 2024          -- 1. Önce yılı filtrele (Satır bazlı)
